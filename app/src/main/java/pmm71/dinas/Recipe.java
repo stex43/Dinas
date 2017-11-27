@@ -6,16 +6,17 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class Recipe extends AppCompatActivity {
-    LinearLayout mainLayout;
+    LinearLayout recipeLayout;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -27,39 +28,60 @@ public class Recipe extends AppCompatActivity {
         String rec = intent.getStringExtra("recipeFile");
 
         int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
-        mainLayout = (LinearLayout) findViewById(R.id.recipeLayout);
+        recipeLayout = findViewById(R.id.recipeLayout);
         LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
                 wrapContent, wrapContent);
 
         Resources resources = this.getResources();
         int recId = this.getResources().getIdentifier(rec, "raw", this.getPackageName());
         InputStream in = resources.openRawResource(recId);
-        //InputStream in = resources.openRawResource(R.raw.rec1);
-        String inputText = inputStreamToString(in);
-        String[] splittedText = inputText.split("\n");
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String str;
 
-        for (int i = 0; i < splittedText.length; i++)
-        {
+        try {
+            //заголовок - название рецепта
+            str = br.readLine();
             TextView text = new TextView(this);
-            text.setText(String.format("Шаг %d\n", i + 1) + splittedText[i]);
-            mainLayout.addView(text, lParams);
-        }
-    }
+            text.setText(str);
+            recipeLayout.addView(text, lParams);
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private String inputStreamToString(InputStream stream){
-        try(ByteArrayOutputStream result = new ByteArrayOutputStream()) {
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = stream.read(buffer)) != -1) {
-                result.write(buffer, 0, length);
+            //главное изображение рецепта
+            str = br.readLine();
+            int pictId = this.getResources().getIdentifier(str,
+                    "drawable", this.getPackageName());
+            ImageView image = new ImageView(this);
+            image.setImageResource(pictId);
+            recipeLayout.addView(image, lParams);
+
+            //ингридиенты
+            StringBuilder helpStr = new StringBuilder("Ингридиенты\n");
+            text = new TextView(this);
+            while (!Objects.equals(str = br.readLine(), ""))
+                helpStr.append(str).append("\n");
+            text.setText(helpStr);
+            recipeLayout.addView(text, lParams);
+
+            //рецепт
+            int i = 0;
+            while ((str = br.readLine()) != null) {
+                text = new TextView(this);
+                text.setText(String.format("Шаг %d\n", i + 1) + str);
+                recipeLayout.addView(text, lParams);
+
+                str = br.readLine();
+                if (!Objects.equals(str, "")) {
+                    pictId = this.getResources().getIdentifier(str,
+                            "drawable", this.getPackageName());
+                    image = new ImageView(this);
+                    image.setImageResource(pictId);
+                    recipeLayout.addView(image, lParams);
+                }
+                i++;
             }
-            return result.toString("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            in.close();
+            br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "";
     }
 }
