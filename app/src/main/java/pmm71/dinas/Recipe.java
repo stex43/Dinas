@@ -53,6 +53,14 @@ public class Recipe extends AppCompatActivity {
             image.setImageResource(pictId);
             recipeLayout.addView(image, lParams);
 
+            //вмонтируем сюда категорию блюда, чтобы потом разбить рецепты по подгруппам в соответствии с этими категориями
+            //я не знаю, нужно ли ее печатать
+            str = br.readLine();
+            text = new TextView(this);
+            text.setText("Категория: ".concat(str));
+            recipeLayout.addView(text, lParams);
+
+
             //ингридиенты
             StringBuilder helpStr = new StringBuilder("Ингридиенты\n");
             text = new TextView(this);

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Dinas.iml" filepath="$PROJECT_DIR$/Dinas.iml" />
+      <module fileurl="file://C:\Users\HP\AndroidStudioProjects\MyApplication5\Dinas.iml" filepath="C:\Users\HP\AndroidStudioProjects\MyApplication5\Dinas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MyApplication5.iml" filepath="$PROJECT_DIR$/MyApplication5.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -21,10 +21,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static java.lang.System.in;
+
 public class SearchResults extends AppCompatActivity implements View.OnClickListener {
     LinearLayout searchResults;
     Resources resources;
     ArrayList<LinearLayout> recipesList = new ArrayList<>();
+    int numRes;
     //ArrayList<String> recipesNamesList = new ArrayList<>();
     ArrayList<String> recipesRawList = new ArrayList<>();
 
@@ -34,16 +37,25 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_results);
 
-
         searchResults = findViewById(R.id.searchResLayout);
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         resources = this.getResources();
 
+        numRes=resources.getInteger(R.integer.numRecipes);
+
+
         if (Objects.equals(name, "all")) {
-            addRecipe("rec1");
-            //addRecipe("rec2");
+
+            for (int i=0; i<numRes; i++) {
+                addRecipe("rec".concat(String.valueOf(i+1)));
+            }
+        }
+
+        else {
+
+            searchString(name);
         }
     }
 
@@ -97,4 +109,30 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
         Toast.makeText(this, recipesRawList.get(v.getId()), Toast.LENGTH_LONG).show();
         startActivity(intent);
     }
+
+
+
+    private void searchString(String nameRecipe) {
+        for (int i = 0; i < numRes; i++) {
+            int recId = resources.getIdentifier("rec".concat(String.valueOf(i+1)), "raw", this.getPackageName());
+            InputStream in = resources.openRawResource(recId);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String str = "";
+            try {
+                str = br.readLine();
+                in.close();
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            str = str.toLowerCase();
+
+            if (str.indexOf(nameRecipe.toLowerCase()) != -1)
+                addRecipe("rec".concat(String.valueOf(i+1)));
+
+        }
+    }
+
+
+
 }
