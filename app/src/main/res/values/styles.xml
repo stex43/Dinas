@@ -8,9 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="NameRecipe">
-        <item name="android:textColor">@color/pinkypink</item>
-        <item name="android:textSize">24sp</item>
+    <style name="header">
+        <item name="android:textColor">@color/headerColor</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="text">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>

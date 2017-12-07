@@ -20,6 +20,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static android.util.TypedValue.COMPLEX_UNIT_SP;
+
 public class SearchResults extends AppCompatActivity implements View.OnClickListener {
     LinearLayout searchResults;
     Resources resources;
@@ -68,8 +70,9 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
             // добавление layout для рецепта
             LinearLayout recipe = new LinearLayout(this);
             int matchParent = LinearLayout.LayoutParams.MATCH_PARENT;
+            int height = resources.getInteger(R.integer.searchResHeightLayout);
             LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(matchParent,
-                    150);
+                    (int) dpFromPx(height));
             recipe.setOrientation(LinearLayout.HORIZONTAL);
             recipe.setId(recipesList.size());
             recipe.setOnClickListener(this);
@@ -84,26 +87,27 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
             text.setText(str);
 
             // добавление картинки рецепта
+            height = resources.getInteger(R.integer.searchResSizeImage);
             str = br.readLine();
             int pictId = this.getResources().getIdentifier(str,
                     "drawable", this.getPackageName());
             ImageView image = new ImageView(this);
             image.setImageResource(pictId);
-            lParams = new LinearLayout.LayoutParams(60, 60);
-            lParams.setMargins(14, 0,0,0);
+            lParams = new LinearLayout.LayoutParams((int) dpFromPx(height), (int) dpFromPx(height));
+            int margin = resources.getInteger(R.integer.searchResImageMargin);
+            lParams.setMargins((int) dpFromPx(margin), 0,0,0);
             recipe.addView(image, lParams);
 
             //  добавление название рецепта
             int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
             lParams = new LinearLayout.LayoutParams(matchParent, wrapContent);
-            lParams.setMargins(14, 0,0,0);
             text.setGravity(Gravity.CENTER_HORIZONTAL);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                text.setTextAppearance(R.style.NameRecipe);
+                text.setTextAppearance(R.style.header);
             }
             else {
-                text.setTextColor(getResources().getColor(R.color.pinkypink));
-                text.setTextSize(28);
+                text.setTextColor(getResources().getColor(R.color.headerColor));
+                text.setTextSize(COMPLEX_UNIT_SP, 20);
             }
             recipe.addView(text, lParams);
 
@@ -145,6 +149,8 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
         }
     }
 
-
-
+    //перевод px в dp. Так удобно, что просто памагити. Хз, как не повторять метод в двух активити
+    private double dpFromPx(double px) {
+        return px / getApplicationContext().getResources().getDisplayMetrics().density;
+    }
 }

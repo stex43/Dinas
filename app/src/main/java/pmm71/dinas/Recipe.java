@@ -15,6 +15,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
 
+import static android.util.TypedValue.COMPLEX_UNIT_SP;
+
 public class Recipe extends AppCompatActivity {
     LinearLayout recipeLayout;
 
@@ -30,7 +32,9 @@ public class Recipe extends AppCompatActivity {
         int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
         int wrap = LinearLayout.LayoutParams.MATCH_PARENT;
         recipeLayout = findViewById(R.id.recipeLayout);
-        LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams lParamsHeader = new LinearLayout.LayoutParams(
+                wrapContent, wrapContent);
+        LinearLayout.LayoutParams lParamsText = new LinearLayout.LayoutParams(
                 wrapContent, wrapContent);
 
         Resources resources = this.getResources();
@@ -40,47 +44,104 @@ public class Recipe extends AppCompatActivity {
         String str;
 
         try {
+            int margin = resources.getInteger(R.integer.headerMargin);
+            lParamsHeader.setMargins((int) dpFromPx(margin), 0, 0, 0);
+            margin = resources.getInteger(R.integer.textMargin);
+            lParamsText.setMargins((int) dpFromPx(margin), 0, 0, 0);
             //заголовок - название рецепта
             str = br.readLine();
             TextView text = new TextView(this);
             text.setText(str);
-            recipeLayout.addView(text, lParams);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                text.setTextAppearance(R.style.header);
+            }
+            else {
+                text.setTextColor(getResources().getColor(R.color.headerColor));
+                text.setTextSize(COMPLEX_UNIT_SP, 20);
+            }
+            recipeLayout.addView(text, lParamsHeader);
 
+            str = br.readLine();
             //главное изображение рецепта
+            int height = getApplicationContext().getResources().getDisplayMetrics().heightPixels;
             str = br.readLine();
             int pictId = this.getResources().getIdentifier(str,
                     "drawable", this.getPackageName());
             ImageView image = new ImageView(this);
             image.setImageResource(pictId);
+            int dpHeight = (int) dpFromPx(height / 1.5);
             LinearLayout.LayoutParams lParamsImage = new LinearLayout.LayoutParams(
-                    wrap, 300);
+                    wrap, dpHeight);
             recipeLayout.addView(image, lParamsImage);
-
-            lParams = new LinearLayout.LayoutParams(
-                    wrapContent, wrapContent);
 
             //вмонтируем сюда категорию блюда, чтобы потом разбить рецепты по подгруппам в соответствии с этими категориями
             //я не знаю, нужно ли ее печатать
             str = br.readLine();
-            text = new TextView(this);
+            /*text = new TextView(this);
             text.setText("Категория: ".concat(str));
-            recipeLayout.addView(text, lParams);
+            recipeLayout.addView(text, lParams);*/
 
+            // время и ккал
+            str = br.readLine();
+            text = new TextView(this);
+            text.setText(String.format("Время: %s", str));
+            recipeLayout.addView(text, lParamsText);
 
-            //ингридиенты
-            StringBuilder helpStr = new StringBuilder("Ингридиенты\n");
+            str = br.readLine();
+            text = new TextView(this);
+            text.setText(String.format("ккал: %s", str));
+            recipeLayout.addView(text, lParamsText);
+
+            //ингредиенты
+            text = new TextView(this);
+            text.setText("Ингредиенты");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                text.setTextAppearance(R.style.header);
+            }
+            else {
+                text.setTextColor(getResources().getColor(R.color.headerColor));
+                text.setTextSize(COMPLEX_UNIT_SP, 20);
+            }
+            recipeLayout.addView(text, lParamsHeader);
+
+            StringBuilder helpStr = new StringBuilder();
             text = new TextView(this);
             while (!Objects.equals(str = br.readLine(), ""))
                 helpStr.append(str).append("\n");
             text.setText(helpStr);
-            recipeLayout.addView(text, lParams);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                text.setTextAppearance(R.style.text);
+            }
+            else {
+                text.setTextColor(getResources().getColor(R.color.textColor));
+                text.setTextSize(COMPLEX_UNIT_SP, 16);
+            }
+            recipeLayout.addView(text, lParamsText);
 
             //рецепт
             int i = 0;
             while ((str = br.readLine()) != null) {
                 text = new TextView(this);
-                text.setText(String.format("Шаг %d\n", i + 1) + str);
-                recipeLayout.addView(text, lParams);
+                text.setText(String.format("Шаг %d", i + 1));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    text.setTextAppearance(R.style.header);
+                }
+                else {
+                    text.setTextColor(getResources().getColor(R.color.headerColor));
+                    text.setTextSize(COMPLEX_UNIT_SP, 20);
+                }
+                recipeLayout.addView(text, lParamsHeader);
+
+                text = new TextView(this);
+                text.setText(str);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    text.setTextAppearance(R.style.text);
+                }
+                else {
+                    text.setTextColor(getResources().getColor(R.color.textColor));
+                    text.setTextSize(COMPLEX_UNIT_SP, 16);
+                }
+                recipeLayout.addView(text, lParamsText);
 
                 str = br.readLine();
                 if (!Objects.equals(str, "")) {
@@ -97,5 +158,10 @@ public class Recipe extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //перевод px в dp. Так удобно, что просто памагити.
+    private double dpFromPx(double px) {
+        return px / getApplicationContext().getResources().getDisplayMetrics().density;
     }
 }
