@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,15 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
-
-import static java.lang.System.in;
 
 public class SearchResults extends AppCompatActivity implements View.OnClickListener {
     LinearLayout searchResults;
@@ -43,12 +40,12 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
         String name = intent.getStringExtra("name");
         resources = this.getResources();
 
-        numRes=resources.getInteger(R.integer.numRecipes);
+        numRes = resources.getInteger(R.integer.numRecipes);
 
 
         if (Objects.equals(name, "all")) {
 
-            for (int i=0; i<numRes; i++) {
+            for (int i = 0; i < numRes; i++) {
                 addRecipe("rec".concat(String.valueOf(i+1)));
             }
         }
@@ -68,31 +65,46 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
             recipesRawList.add(rawName);
             str = br.readLine();
 
+            // добавление layout для рецепта
             LinearLayout recipe = new LinearLayout(this);
             int matchParent = LinearLayout.LayoutParams.MATCH_PARENT;
             LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(matchParent,
-                    120);
+                    150);
             recipe.setOrientation(LinearLayout.HORIZONTAL);
             recipe.setId(recipesList.size());
             recipe.setOnClickListener(this);
+            recipe.setBackgroundResource(R.drawable.recipe_border);
+            recipe.setGravity(Gravity.CENTER_VERTICAL);
             recipesList.add(recipe);
             searchResults.addView(recipe, lParams);
 
-
+            // считывание названия рецепта
             TextView text = new TextView(this);
             //recipesNamesList.add(str);
             text.setText(str);
 
+            // добавление картинки рецепта
             str = br.readLine();
             int pictId = this.getResources().getIdentifier(str,
                     "drawable", this.getPackageName());
             ImageView image = new ImageView(this);
             image.setImageResource(pictId);
             lParams = new LinearLayout.LayoutParams(60, 60);
+            lParams.setMargins(14, 0,0,0);
             recipe.addView(image, lParams);
 
+            //  добавление название рецепта
             int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
-            lParams = new LinearLayout.LayoutParams(wrapContent, 75);
+            lParams = new LinearLayout.LayoutParams(matchParent, wrapContent);
+            lParams.setMargins(14, 0,0,0);
+            text.setGravity(Gravity.CENTER_HORIZONTAL);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                text.setTextAppearance(R.style.NameRecipe);
+            }
+            else {
+                text.setTextColor(getResources().getColor(R.color.pinkypink));
+                text.setTextSize(28);
+            }
             recipe.addView(text, lParams);
 
             in.close();

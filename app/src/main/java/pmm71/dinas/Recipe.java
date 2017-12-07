@@ -28,6 +28,7 @@ public class Recipe extends AppCompatActivity {
         String rec = intent.getStringExtra("recipeFile");
 
         int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int wrap = LinearLayout.LayoutParams.MATCH_PARENT;
         recipeLayout = findViewById(R.id.recipeLayout);
         LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
                 wrapContent, wrapContent);
@@ -51,7 +52,12 @@ public class Recipe extends AppCompatActivity {
                     "drawable", this.getPackageName());
             ImageView image = new ImageView(this);
             image.setImageResource(pictId);
-            recipeLayout.addView(image, lParams);
+            LinearLayout.LayoutParams lParamsImage = new LinearLayout.LayoutParams(
+                    wrap, 300);
+            recipeLayout.addView(image, lParamsImage);
+
+            lParams = new LinearLayout.LayoutParams(
+                    wrapContent, wrapContent);
 
             //вмонтируем сюда категорию блюда, чтобы потом разбить рецепты по подгруппам в соответствии с этими категориями
             //я не знаю, нужно ли ее печатать
@@ -82,7 +88,7 @@ public class Recipe extends AppCompatActivity {
                             "drawable", this.getPackageName());
                     image = new ImageView(this);
                     image.setImageResource(pictId);
-                    recipeLayout.addView(image, lParams);
+                    recipeLayout.addView(image, lParamsImage);
                 }
                 i++;
             }
