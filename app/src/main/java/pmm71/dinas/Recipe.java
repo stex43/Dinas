@@ -45,9 +45,10 @@ public class Recipe extends AppCompatActivity {
 
         try {
             int margin = resources.getInteger(R.integer.headerMargin);
-            lParamsHeader.setMargins((int) dpFromPx(margin), 0, 0, 0);
+            float density = getApplicationContext().getResources().getDisplayMetrics().density;
+            lParamsHeader.setMargins(GlobalThings.pxFromDp(margin, density), 0, 0, 0);
             margin = resources.getInteger(R.integer.textMargin);
-            lParamsText.setMargins((int) dpFromPx(margin), 0, 0, 0);
+            lParamsText.setMargins(GlobalThings.pxFromDp(margin, density), 0, 0, 0);
             //заголовок - название рецепта
             str = br.readLine();
             TextView text = new TextView(this);
@@ -69,9 +70,8 @@ public class Recipe extends AppCompatActivity {
                     "drawable", this.getPackageName());
             ImageView image = new ImageView(this);
             image.setImageResource(pictId);
-            int dpHeight = (int) dpFromPx(height / 1.5);
             LinearLayout.LayoutParams lParamsImage = new LinearLayout.LayoutParams(
-                    wrap, dpHeight);
+                    wrap, (int) (height / 2.2));
             recipeLayout.addView(image, lParamsImage);
 
             //вмонтируем сюда категорию блюда, чтобы потом разбить рецепты по подгруппам в соответствии с этими категориями
@@ -159,9 +159,6 @@ public class Recipe extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    //перевод px в dp. Так удобно, что просто памагити.
-    private double dpFromPx(double px) {
-        return px / getApplicationContext().getResources().getDisplayMetrics().density;
-    }
 }
+
+

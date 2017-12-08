@@ -71,8 +71,9 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
             LinearLayout recipe = new LinearLayout(this);
             int matchParent = LinearLayout.LayoutParams.MATCH_PARENT;
             int height = resources.getInteger(R.integer.searchResHeightLayout);
+            float density = getApplicationContext().getResources().getDisplayMetrics().density;
             LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(matchParent,
-                    (int) dpFromPx(height));
+                    GlobalThings.pxFromDp(height, density));
             recipe.setOrientation(LinearLayout.HORIZONTAL);
             recipe.setId(recipesList.size());
             recipe.setOnClickListener(this);
@@ -93,9 +94,10 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
                     "drawable", this.getPackageName());
             ImageView image = new ImageView(this);
             image.setImageResource(pictId);
-            lParams = new LinearLayout.LayoutParams((int) dpFromPx(height), (int) dpFromPx(height));
+            lParams = new LinearLayout.LayoutParams(GlobalThings.pxFromDp(height, density),
+                    GlobalThings.pxFromDp(height, density));
             int margin = resources.getInteger(R.integer.searchResImageMargin);
-            lParams.setMargins((int) dpFromPx(margin), 0,0,0);
+            lParams.setMargins(GlobalThings.pxFromDp(margin, density), 0,0,0);
             recipe.addView(image, lParams);
 
             //  добавление название рецепта
@@ -147,10 +149,5 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
                 addRecipe("rec".concat(String.valueOf(i+1)));
 
         }
-    }
-
-    //перевод px в dp. Так удобно, что просто памагити. Хз, как не повторять метод в двух активити
-    private double dpFromPx(double px) {
-        return px / getApplicationContext().getResources().getDisplayMetrics().density;
     }
 }

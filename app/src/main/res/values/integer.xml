@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="numRecipes">3</integer>
-    <integer name="searchResHeightLayout">200</integer>
-    <integer name="searchResSizeImage">170</integer>
-    <integer name="searchResImageMargin">17</integer>
-    <integer name="textMargin">28</integer>
-    <integer name="headerMargin">16</integer>
+    <integer name="searchResHeightLayout">100</integer>
+    <integer name="searchResSizeImage">80</integer>
+    <integer name="searchResImageMargin">10</integer>
+    <integer name="textMargin">10</integer>
+    <integer name="headerMargin">5</integer>
 </resources>
