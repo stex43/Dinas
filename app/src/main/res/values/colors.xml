@@ -5,5 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="headerColor">#CD0074</color>
     <color name="borderColor">#ff008f</color>
+    <color name="mainpageborderColor">#9d009d</color>
     <color name="textColor">#4d4d4d</color>
 </resources>
