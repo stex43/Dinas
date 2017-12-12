@@ -42,6 +42,27 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
         String name = intent.getStringExtra("name");
         oursApp.resources = this.getResources();
 
+      /* if (Objects.equals(name, "all")) {
+
+            for (int i = 0; i < numRes; i++) {
+                addRecipe("rec".concat(String.valueOf(i+1)));
+            }
+        }
+
+        String a=name.substring(0,1);
+        if (a.equals("1")){
+
+            for (int i = 0; i < numRes; i++) {
+                searchRecipeName("rec".concat(String.valueOf(i+1)), name.substring(1));
+            }
+        }
+
+        else {
+
+           for (int i = 0; i < numRes; i++) {
+               searchRecipeCategory("rec".concat(String.valueOf(i+1)), name);
+           }*/
+  
         numRes = oursApp.resources.getInteger(R.integer.numRecipes);
 
         if (Objects.equals(name, "all")) {
@@ -107,6 +128,68 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
                 text.setTextColor(getResources().getColor(R.color.headerColor));
                 text.setTextSize(COMPLEX_UNIT_SP, 20);
             }
+      
+            /*recipe.addView(text, lParams);
+
+            in.close();
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, Recipe.class);
+        intent.putExtra("recipeFile", recipesRawList.get(v.getId()));
+        Toast.makeText(this, recipesRawList.get(v.getId()), Toast.LENGTH_LONG).show();
+        startActivity(intent);
+    }
+
+
+
+    private void searchRecipeName(String nameFile, String nameRecipe) {
+        int recId = resources.getIdentifier(nameFile, "raw", this.getPackageName());
+        InputStream in = resources.openRawResource(recId);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String str = "";
+            try {
+                str = br.readLine();
+                in.close();
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            str = str.toLowerCase();
+
+        str = str.toLowerCase();
+        nameRecipe = nameRecipe.toLowerCase();
+        if (str.contains(nameRecipe))
+            addRecipe(nameFile);
+    }
+
+
+
+
+
+
+    private void searchRecipeCategory(String nameFile, String nameCat) {
+        int recId = resources.getIdentifier(nameFile, "raw", this.getPackageName());
+        InputStream in = resources.openRawResource(recId);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String str = "";
+        try {
+            for (int i = 0; i < 4; i++)
+                str = br.readLine();
+            in.close();
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        str = str.toLowerCase();
+        nameCat = nameCat.toLowerCase();
+        if (nameCat.equals(str))
+            addRecipe(nameFile);*/
             reclinearLayout.addView(text, lParams);
     }
 }
