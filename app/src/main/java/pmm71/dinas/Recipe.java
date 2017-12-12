@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 class Recipe {
     private String time;
-    private int kcal;
+    private String kcal;
     private ArrayList<String> ingredients;
     private ArrayList<String> images;
     private ArrayList<String> steps;
@@ -40,7 +40,7 @@ class Recipe {
         time = settingTime;
     }
 
-    void setKcal(int settingKcal)
+    void setKcal(String settingKcal)
     {
         kcal = settingKcal;
     }
@@ -51,7 +51,7 @@ class Recipe {
         return time;
     }
 
-    int getKcal() {
+    String getKcal() {
         return kcal;
     }
 

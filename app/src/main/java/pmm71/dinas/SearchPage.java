@@ -41,8 +41,8 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this, SearchResults.class);
-        String str="1".concat(textView.getText().toString());
-        intent.putExtra("name", str);
+        intent.putExtra("category", "");
+        intent.putExtra("searchStr", textView.getText().toString());
                 startActivity(intent);
     }
 

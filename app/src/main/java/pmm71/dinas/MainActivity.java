@@ -34,29 +34,24 @@ import static android.provider.Telephony.Mms.Part.FILENAME;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    LinearLayout ll1;
     LinearLayout[] linearLayouts = new LinearLayout[10];
     AlertDialog alert;
+    OursApplication oursApp;
 
-    ImageView helloy;
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        linearLayouts[0] = findViewById(R.id.search);
-
-        linearLayouts[1] = findViewById(R.id.autors);
-
         oursApp = (OursApplication)this.getApplication();
 
         oursApp.ReadFiles();
 
-        button = findViewById(R.id.button);
-        button.setOnClickListener(this);
+        linearLayouts[0] = findViewById(R.id.search);
+
+        linearLayouts[1] = findViewById(R.id.autors);
 
         linearLayouts[2] = findViewById(R.id.desert);
 
@@ -75,41 +70,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         linearLayouts[9] = findViewById(R.id.allrecipe);
 
 
-
         for (LinearLayout linlayout : linearLayouts) {
             linlayout.setOnClickListener(this);
         }
 
-       /* helloy = findViewById(R.id.searchimage);
-        helloy.setOnClickListener(this);*/
-
-
-/*        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Важное сообщение!")
-                .setMessage("Покормите кота!")
-                .setIcon(R.drawable.demas)
-                .setCancelable(false)
-                .setNegativeButton("ОК, иду на кухню",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-        alert = builder.create();*/
-
-        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+        /*AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
         builder
                 .setTitle("Об авторах")
                 .setIcon(R.drawable.ic_tykva)
                 .setView(R.layout.dialog)
                 .setPositiveButton("OK", null);
-        alert = builder.create();
+        alert = builder.create();*/
     }
 
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(this, SearchResults.class);
         Intent intent2 = new Intent(this, SearchPage.class);
+        intent.putExtra("searchStr", "");
         switch (view.getId())
         {
             case R.id.autors:
@@ -121,51 +99,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.desert:
-                intent.putExtra("name", "Десерты");
+                intent.putExtra("category", "Десерты");
                 startActivity(intent);
                 break;
 
             case R.id.brekf:
-                intent.putExtra("name", "Завтраки");
+                intent.putExtra("category", "Завтраки");
                 startActivity(intent);
                 break;
 
             case R.id.meat:
-                intent.putExtra("name", "Мясные блюда");
+                intent.putExtra("category", "Мясные блюда");
                 startActivity(intent);
                 break;
 
             case R.id.salad:
-                intent.putExtra("name", "Салаты");
+                intent.putExtra("category", "Салаты");
                 startActivity(intent);
                 break;
 
             case R.id.soup:
-                intent.putExtra("name", "Супы");
+                intent.putExtra("category", "Супы");
                 startActivity(intent);
                 break;
 
             case R.id.drink:
-                intent.putExtra("name", "Напитки");
+                intent.putExtra("category", "Напитки");
                 startActivity(intent);
                 break;
 
             case R.id.seaprod:
-                intent.putExtra("name", "Морепродукты");
+                intent.putExtra("category", "Морепродукты");
                 startActivity(intent);
                 break;
 
             case R.id.allrecipe:
-                intent.putExtra("name", "all");
+                intent.putExtra("category", "");
                 startActivity(intent);
                 break;
-
-
-
         }
-
-
-
     }
-
 }

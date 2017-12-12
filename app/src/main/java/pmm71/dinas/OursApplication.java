@@ -3,7 +3,6 @@ package pmm71.dinas;
 import android.app.Application;
 import android.content.res.Resources;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,16 +20,16 @@ import java.util.Set;
 
 public class OursApplication extends Application {
     public Map<String, Map<String, Recipe>> database;
-    int numRec = 3;
+    int numRec = 8;
     private float density;
     Resources resources;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void ReadFiles() {
         resources = this.getResources();
         density = getApplicationContext().getResources().getDisplayMetrics().density;
 
-        String[] categories = new String[]{ "Салаты" };
+        String[] categories = new String[]{ "Салаты", "Десерты", "Завтраки", "Мясные блюда",
+                "Супы", "Напитки", "Морепродукты" };
         database = new HashMap<>();
         for (String category : categories)
             database.put(category, new HashMap<String, Recipe>());
@@ -67,10 +66,12 @@ public class OursApplication extends Application {
                 recipe.setTime(str);
 
                 str = br.readLine();
-                recipe.setKcal(Integer.parseInt(str));
+                recipe.setKcal(str);
 
-                while (!Objects.equals(str = br.readLine(), ""))
-                    recipe.AddIngredient(str);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    while (!Objects.equals(str = br.readLine(), ""))
+                        recipe.AddIngredient(str);
+                }
 
                 while ((str = br.readLine()) != null) {
                     recipe.AddStep(str);
@@ -119,23 +120,25 @@ public class OursApplication extends Application {
         ArrayList<keysToRecipe> result = new ArrayList<>();
 
         //поиск по названию в категории/ях
-        if (category == "") {
-            Set<String> catNames = database.keySet();
-            for (String cat : database.keySet()) {
-                ArrayList<String> recipes = seacrhInCategory(cat, seacrhingString);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (Objects.equals(category, "")) {
+                Set<String> catNames = database.keySet();
+                for (String cat : database.keySet()) {
+                    ArrayList<String> recipes = searchInCategory(cat, seacrhingString);
 
-                for (String recipeName : recipes) {
-                    keysToRecipe keys = new keysToRecipe(cat, recipeName);
-                    result.add(keys);
+                    for (String recipeName : recipes) {
+                        keysToRecipe keys = new keysToRecipe(cat, recipeName);
+                        result.add(keys);
+                    }
                 }
             }
-        }
-        else {
-            ArrayList<String> recipes = seacrhInCategory(category, seacrhingString);
+            else {
+                ArrayList<String> recipes = searchInCategory(category, seacrhingString);
 
-            for (String recipeName : recipes) {
-                keysToRecipe keys = new keysToRecipe(category, recipeName);
-                result.add(keys);
+                for (String recipeName : recipes) {
+                    keysToRecipe keys = new keysToRecipe(category, recipeName);
+                    result.add(keys);
+                }
             }
         }
 
@@ -144,7 +147,7 @@ public class OursApplication extends Application {
         return result;
     }
 
-    private ArrayList<String> seacrhInCategory(String category, String seacrhingString) {
+    private ArrayList<String> searchInCategory(String category, String seacrhingString) {
         ArrayList<String> result = new ArrayList<>();
 
         Set<String> recipeNames = database.get(category).keySet();

@@ -58,7 +58,8 @@ public class RecipeActivity extends AppCompatActivity {
         addHeader(recipeName);
 
         //главное изображение рецепта
-        String str = oursApp.database.get("Салаты").get("Hello").getImage(1);
+        //String str = oursApp.database.get("Салаты").get("Hello").getImage(1);
+        String str = oursApp.database.get(category).get(recipeName).getImage(1);
         addImage(str);
 
         //вмонтируем сюда категорию блюда, чтобы потом разбить рецепты по подгруппам в соответствии с этими категориями
@@ -73,7 +74,7 @@ public class RecipeActivity extends AppCompatActivity {
         addText(recipe.getTime());
 
         addHeader("ккал");
-        addText(String.format("%d", recipe.getKcal()));
+        addText(recipe.getKcal());
 
         //ингредиенты
         addHeader("Ингредиенты");

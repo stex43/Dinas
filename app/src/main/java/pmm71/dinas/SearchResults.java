@@ -36,10 +36,11 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.search_results);
         searchResults = findViewById(R.id.searchResLayout);
 
-        oursApp = (OursApplication)this.getApplication();
+        oursApp = (OursApplication) this.getApplication();
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
+        String category = intent.getStringExtra("category");
+        String searchStr = intent.getStringExtra("searchStr");
         oursApp.resources = this.getResources();
 
       /* if (Objects.equals(name, "all")) {
@@ -62,20 +63,13 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
            for (int i = 0; i < numRes; i++) {
                searchRecipeCategory("rec".concat(String.valueOf(i+1)), name);
            }*/
-  
+
         numRes = oursApp.resources.getInteger(R.integer.numRecipes);
 
-        if (Objects.equals(name, "all")) {
-            /*for (int i = 0; i < numRes; i++) {
-                addRecipe("rec".concat(String.valueOf(i + 1)));
-            }*/
-        }
-        else {
-            searchRes = oursApp.searchRecipes("",
-                    "", null, null);
-            for (OursApplication.keysToRecipe keys : searchRes)
-                addRecipe(keys);
-        }
+        searchRes = oursApp.searchRecipes(category,
+                searchStr, null, null);
+        for (OursApplication.keysToRecipe keys : searchRes)
+            addRecipe(keys);
     }
 
     @Override
