@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView helloy;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +50,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         linearLayouts[0] = findViewById(R.id.search);
 
         linearLayouts[1] = findViewById(R.id.autors);
+
+        oursApp = (OursApplication)this.getApplication();
+
+        oursApp.ReadFiles();
+
+        button = findViewById(R.id.button);
+        button.setOnClickListener(this);
 
         linearLayouts[2] = findViewById(R.id.desert);
 
@@ -96,8 +104,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setView(R.layout.dialog)
                 .setPositiveButton("OK", null);
         alert = builder.create();
-
-
     }
 
     @Override

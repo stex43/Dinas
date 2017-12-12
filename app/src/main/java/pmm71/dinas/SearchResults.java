@@ -24,27 +24,25 @@ import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
 public class SearchResults extends AppCompatActivity implements View.OnClickListener {
     LinearLayout searchResults;
-    Resources resources;
     ArrayList<LinearLayout> recipesList = new ArrayList<>();
+    ArrayList<OursApplication.keysToRecipe> searchRes;
+    OursApplication oursApp;
     int numRes;
-    //ArrayList<String> recipesNamesList = new ArrayList<>();
-    ArrayList<String> recipesRawList = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_results);
-
         searchResults = findViewById(R.id.searchResLayout);
+
+        oursApp = (OursApplication)this.getApplication();
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
-        resources = this.getResources();
+        oursApp.resources = this.getResources();
 
-        numRes = resources.getInteger(R.integer.numRecipes);
-
-       if (Objects.equals(name, "all")) {
+      /* if (Objects.equals(name, "all")) {
 
             for (int i = 0; i < numRes; i++) {
                 addRecipe("rec".concat(String.valueOf(i+1)));
@@ -63,53 +61,63 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
 
            for (int i = 0; i < numRes; i++) {
                searchRecipeCategory("rec".concat(String.valueOf(i+1)), name);
-           }
+           }*/
+  
+        numRes = oursApp.resources.getInteger(R.integer.numRecipes);
+
+        if (Objects.equals(name, "all")) {
+            /*for (int i = 0; i < numRes; i++) {
+                addRecipe("rec".concat(String.valueOf(i + 1)));
+            }*/
+        }
+        else {
+            searchRes = oursApp.searchRecipes("",
+                    "", null, null);
+            for (OursApplication.keysToRecipe keys : searchRes)
+                addRecipe(keys);
         }
     }
 
-    private void addRecipe(String rawName) {
-        int recId = resources.getIdentifier(rawName, "raw", this.getPackageName());
-        InputStream in = resources.openRawResource(recId);
-        BufferedReader br = new BufferedReader(new InputStreamReader(in));
-        String str;
-        try {
-            recipesRawList.add(rawName);
-            str = br.readLine();
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, RecipeActivity.class);
+        intent.putExtra("category", searchRes.get(v.getId()).getCategory());
+        intent.putExtra("recipeName", searchRes.get(v.getId()).getRecipeName());
+        startActivity(intent);
+    }
 
+    private void addRecipe(OursApplication.keysToRecipe recipe) {
             // добавление layout для рецепта
-            LinearLayout recipe = new LinearLayout(this);
+            LinearLayout reclinearLayout = new LinearLayout(this);
             int matchParent = LinearLayout.LayoutParams.MATCH_PARENT;
-            int height = resources.getInteger(R.integer.searchResHeightLayout);
-            float density = getApplicationContext().getResources().getDisplayMetrics().density;
+            int height = oursApp.resources.getInteger(R.integer.searchResHeightLayout);
             LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(matchParent,
-                    GlobalThings.pxFromDp(height, density));
-            recipe.setOrientation(LinearLayout.HORIZONTAL);
-            recipe.setId(recipesList.size());
-            recipe.setOnClickListener(this);
-            recipe.setBackgroundResource(R.drawable.recipe_border);
-            recipe.setGravity(Gravity.CENTER_VERTICAL);
-            recipesList.add(recipe);
-            searchResults.addView(recipe, lParams);
-
-            // считывание названия рецепта
-            TextView text = new TextView(this);
-            //recipesNamesList.add(str);
-            text.setText(str);
+                    oursApp.pxFromDp(height));
+            reclinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+            reclinearLayout.setId(recipesList.size());
+            reclinearLayout.setOnClickListener(this);
+            reclinearLayout.setBackgroundResource(R.drawable.recipe_border);
+            reclinearLayout.setGravity(Gravity.CENTER_VERTICAL);
+            recipesList.add(reclinearLayout);
+            searchResults.addView(reclinearLayout, lParams);
 
             // добавление картинки рецепта
-            height = resources.getInteger(R.integer.searchResSizeImage);
-            str = br.readLine();
+            height = oursApp.resources.getInteger(R.integer.searchResSizeImage);
+            String str = oursApp.database.get(recipe.getCategory()).get(recipe.getRecipeName()).
+                    getImage(0);
             int pictId = this.getResources().getIdentifier(str,
                     "drawable", this.getPackageName());
             ImageView image = new ImageView(this);
             image.setImageResource(pictId);
-            lParams = new LinearLayout.LayoutParams(GlobalThings.pxFromDp(height, density),
-                    GlobalThings.pxFromDp(height, density));
-            int margin = resources.getInteger(R.integer.searchResImageMargin);
-            lParams.setMargins(GlobalThings.pxFromDp(margin, density), 0,0,0);
-            recipe.addView(image, lParams);
+            lParams = new LinearLayout.LayoutParams(oursApp.pxFromDp(height),
+                    oursApp.pxFromDp(height));
+            int margin = oursApp.resources.getInteger(R.integer.searchResImageMargin);
+            lParams.setMargins(oursApp.pxFromDp(margin), 0,0,0);
+            reclinearLayout.addView(image, lParams);
 
             //  добавление название рецепта
+            TextView text = new TextView(this);
+            text.setText(recipe.getRecipeName());
             int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
             lParams = new LinearLayout.LayoutParams(matchParent, wrapContent);
             text.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -120,7 +128,8 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
                 text.setTextColor(getResources().getColor(R.color.headerColor));
                 text.setTextSize(COMPLEX_UNIT_SP, 20);
             }
-            recipe.addView(text, lParams);
+      
+            /*recipe.addView(text, lParams);
 
             in.close();
             br.close();
@@ -180,6 +189,7 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
         str = str.toLowerCase();
         nameCat = nameCat.toLowerCase();
         if (nameCat.equals(str))
-            addRecipe(nameFile);
+            addRecipe(nameFile);*/
+            reclinearLayout.addView(text, lParams);
     }
 }
