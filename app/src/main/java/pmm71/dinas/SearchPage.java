@@ -19,17 +19,20 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
     AutoCompleteTextView textView;
     ArrayAdapter<String> adapter;
     ImageButton searchButton;
+    OursApplication oursApp;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_page);
+        oursApp = (OursApplication)this.getApplication();
 
         textView = (AutoCompleteTextView) findViewById(R.id.etName);
-        String[] countries = getResources().getStringArray(R.array.example_array);
+        //String[] countries = getResources().getStringArray(R.array.example_array);
 // Здесь нужно как-то получить список названий всех рецептов, пока тут могут выводиться только строковые константы из файла ресурсов
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, countries);
+      //  adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, countries);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, oursApp.recipeNames);
         textView.setAdapter(adapter);
 
         searchButton = findViewById(R.id.imageButtonSearch);

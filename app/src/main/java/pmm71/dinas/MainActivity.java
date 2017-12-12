@@ -74,13 +74,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             linlayout.setOnClickListener(this);
         }
 
-        /*AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
-        builder
-                .setTitle("Об авторах")
-                .setIcon(R.drawable.ic_tykva)
-                .setView(R.layout.dialog)
-                .setPositiveButton("OK", null);
-        alert = builder.create();*/
+        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder
+                    .setTitle("Об авторах")
+                    .setIcon(R.drawable.ic_tykva)
+                    .setView(R.layout.dialog)
+                    .setPositiveButton("OK", null);
+        }
+        else {
+            builder
+                    .setTitle("Об авторах")
+                    .setIcon(R.drawable.ic_tykva)
+                    .setPositiveButton("OK", null);
+        }
+        alert = builder.create();
     }
 
     @Override

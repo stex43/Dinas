@@ -20,13 +20,16 @@ import java.util.Set;
 
 public class OursApplication extends Application {
     public Map<String, Map<String, Recipe>> database;
-    int numRec = 8;
+    public ArrayList<String> recipeNames;
+    int numRec;
     private float density;
     Resources resources;
 
     public void ReadFiles() {
         resources = this.getResources();
         density = getApplicationContext().getResources().getDisplayMetrics().density;
+        numRec = resources.getInteger(R.integer.numRecipes);
+        recipeNames = new ArrayList<>();
 
         String[] categories = new String[]{ "Салаты", "Десерты", "Завтраки", "Мясные блюда",
                 "Супы", "Напитки", "Морепродукты" };
@@ -53,6 +56,7 @@ public class OursApplication extends Application {
 
                 //region Составление рецепта
                 recipeName = br.readLine();
+                recipeNames.add(recipeName);
 
                 str = br.readLine();
                 recipe.AddImage(str);
