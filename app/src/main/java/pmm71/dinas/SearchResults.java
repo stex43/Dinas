@@ -44,17 +44,26 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
 
         numRes = resources.getInteger(R.integer.numRecipes);
 
-
-        if (Objects.equals(name, "all")) {
+       if (Objects.equals(name, "all")) {
 
             for (int i = 0; i < numRes; i++) {
                 addRecipe("rec".concat(String.valueOf(i+1)));
             }
         }
 
+        String a=name.substring(0,1);
+        if (a.equals("1")){
+
+            for (int i = 0; i < numRes; i++) {
+                searchRecipeName("rec".concat(String.valueOf(i+1)), name.substring(1));
+            }
+        }
+
         else {
 
-            searchString(name);
+           for (int i = 0; i < numRes; i++) {
+               searchRecipeCategory("rec".concat(String.valueOf(i+1)), name);
+           }
         }
     }
 
@@ -130,11 +139,10 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
 
 
 
-    private void searchString(String nameRecipe) {
-        for (int i = 0; i < numRes; i++) {
-            int recId = resources.getIdentifier("rec".concat(String.valueOf(i+1)), "raw", this.getPackageName());
-            InputStream in = resources.openRawResource(recId);
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    private void searchRecipeName(String nameFile, String nameRecipe) {
+        int recId = resources.getIdentifier(nameFile, "raw", this.getPackageName());
+        InputStream in = resources.openRawResource(recId);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String str = "";
             try {
                 str = br.readLine();
@@ -145,9 +153,33 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
             }
             str = str.toLowerCase();
 
-            if (str.indexOf(nameRecipe.toLowerCase()) != -1)
-                addRecipe("rec".concat(String.valueOf(i+1)));
+        str = str.toLowerCase();
+        nameRecipe = nameRecipe.toLowerCase();
+        if (str.contains(nameRecipe))
+            addRecipe(nameFile);
+    }
 
+
+
+
+
+
+    private void searchRecipeCategory(String nameFile, String nameCat) {
+        int recId = resources.getIdentifier(nameFile, "raw", this.getPackageName());
+        InputStream in = resources.openRawResource(recId);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String str = "";
+        try {
+            for (int i = 0; i < 4; i++)
+                str = br.readLine();
+            in.close();
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        str = str.toLowerCase();
+        nameCat = nameCat.toLowerCase();
+        if (nameCat.equals(str))
+            addRecipe(nameFile);
     }
 }

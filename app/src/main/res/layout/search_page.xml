@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <AutoCompleteTextView
+                    android:id="@+id/etName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/imageButtonSearch"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="5"
+                    android:fadeScrollbars="true"
+                    android:hint="Ведите название рецепта"
+                    android:singleLine="true" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="9dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@android:drawable/ic_menu_search" />
+
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/seekBar2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RadioButton" />
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Switch" />
+
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ToggleButton
+                android:id="@+id/toggleButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ToggleButton" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CheckBox" />
+
+            <CheckedTextView
+                android:id="@+id/checkedTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CheckedTextView" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                app:srcCompat="@drawable/all" />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>
