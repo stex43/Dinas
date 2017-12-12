@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="numRecipes">3</integer>
+    <integer name="numRecipes">8</integer>
     <integer name="searchResHeightLayout">100</integer>
     <integer name="searchResSizeImage">80</integer>
     <integer name="searchResImageMargin">10</integer>
