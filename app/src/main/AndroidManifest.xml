@@ -3,6 +3,7 @@
     package="pmm71.dinas">
 
     <application
+        android:name="pmm71.dinas.OursApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Recipe" />
+        <activity android:name=".RecipeActivity" />
         <activity android:name=".SearchResults" />
         <activity android:name=".RecipeCategories" />
     </application>
