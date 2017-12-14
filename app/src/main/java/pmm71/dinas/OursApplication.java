@@ -56,7 +56,7 @@ public class OursApplication extends Application {
 
                 //region Составление рецепта
                 recipeName = br.readLine();
-                recipeNames.add(recipeName);
+                recipeNames.add(recipeName.replace("\"", ""));
 
                 str = br.readLine();
                 recipe.AddImage(str);
@@ -126,7 +126,6 @@ public class OursApplication extends Application {
         //поиск по названию в категории/ях
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (Objects.equals(category, "")) {
-                Set<String> catNames = database.keySet();
                 for (String cat : database.keySet()) {
                     ArrayList<String> recipes = searchInCategory(cat, seacrhingString);
 
@@ -135,8 +134,7 @@ public class OursApplication extends Application {
                         result.add(keys);
                     }
                 }
-            }
-            else {
+            } else {
                 ArrayList<String> recipes = searchInCategory(category, seacrhingString);
 
                 for (String recipeName : recipes) {
@@ -147,7 +145,27 @@ public class OursApplication extends Application {
         }
 
         //поиск по ингредиентам
+        if (inclIngrs.size() != 0 || exclIngrs.size() != 0) {
+            outer:
+            for (int i = result.size() - 1; i >= 0; i--) {
+                String cat = result.get(i).getCategory();
+                String name = result.get(i).getRecipeName();
+                Recipe recipe = database.get(cat).get(name);
 
+                for (String ingredient : inclIngrs)
+                    if (!recipe.HasIngredient(ingredient)) {
+                        result.remove(i);
+                        continue outer;
+                    }
+
+                for (String ingredient : exclIngrs)
+                    if (recipe.HasIngredient(ingredient)) {
+                        result.remove(i);
+                        continue outer;
+                    }
+
+            }
+        }
         return result;
     }
 

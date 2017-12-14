@@ -11,6 +11,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+
 /**
  * Created by HP on 02.12.2017.
  */
@@ -21,18 +23,15 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
     ImageButton searchButton;
     OursApplication oursApp;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_page);
         oursApp = (OursApplication)this.getApplication();
 
-        textView = (AutoCompleteTextView) findViewById(R.id.etName);
-        //String[] countries = getResources().getStringArray(R.array.example_array);
-// Здесь нужно как-то получить список названий всех рецептов, пока тут могут выводиться только строковые константы из файла ресурсов
-      //  adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, countries);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, oursApp.recipeNames);
+        textView = findViewById(R.id.etName);
+        adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, oursApp.recipeNames);
         textView.setAdapter(adapter);
 
         searchButton = findViewById(R.id.imageButtonSearch);
@@ -44,8 +43,12 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this, SearchResults.class);
-        intent.putExtra("category", "");
-        intent.putExtra("searchStr", textView.getText().toString());
+        Bundle extras = new Bundle();
+        extras.putString("searchStr", textView.getText().toString());
+        extras.putStringArrayList("inclIngr", new ArrayList<String>());
+        extras.putStringArrayList("exclIngr", new ArrayList<String>());
+        extras.putString("category", "");
+        intent.putExtra("search", extras);
                 startActivity(intent);
     }
 

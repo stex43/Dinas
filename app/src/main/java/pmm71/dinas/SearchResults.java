@@ -39,35 +39,20 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
         oursApp = (OursApplication) this.getApplication();
 
         Intent intent = getIntent();
-        String category = intent.getStringExtra("category");
-        String searchStr = intent.getStringExtra("searchStr");
+        Bundle extras = intent.getBundleExtra("search");
+        String category = extras.getString("category");
+        String searchStr = extras.getString("searchStr");
+        ArrayList<String> inclIngr = extras.getStringArrayList("inclIngr");
+        ArrayList<String> exclIngr = extras.getStringArrayList("exclIngr");
+
+        exclIngr.add("майонез");
+
         oursApp.resources = this.getResources();
-
-      /* if (Objects.equals(name, "all")) {
-
-            for (int i = 0; i < numRes; i++) {
-                addRecipe("rec".concat(String.valueOf(i+1)));
-            }
-        }
-
-        String a=name.substring(0,1);
-        if (a.equals("1")){
-
-            for (int i = 0; i < numRes; i++) {
-                searchRecipeName("rec".concat(String.valueOf(i+1)), name.substring(1));
-            }
-        }
-
-        else {
-
-           for (int i = 0; i < numRes; i++) {
-               searchRecipeCategory("rec".concat(String.valueOf(i+1)), name);
-           }*/
 
         numRes = oursApp.resources.getInteger(R.integer.numRecipes);
 
         searchRes = oursApp.searchRecipes(category,
-                searchStr, null, null);
+                searchStr, inclIngr, exclIngr);
         for (OursApplication.keysToRecipe keys : searchRes)
             addRecipe(keys);
     }

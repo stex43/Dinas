@@ -1,6 +1,9 @@
 package pmm71.dinas;
 
+import android.os.Build;
+
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by St-Ex on 10.12.2017.
@@ -75,4 +78,14 @@ class Recipe {
         return steps.get(index);
     }
     //endregion
+
+    boolean HasIngredient(String searchingIngredient) {
+        searchingIngredient.toLowerCase();
+        for (String ingredient : ingredients) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (ingredient.toLowerCase().contains(searchingIngredient)) return true;
+            }
+        }
+        return false;
+    }
 }

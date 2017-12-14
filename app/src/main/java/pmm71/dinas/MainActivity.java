@@ -95,7 +95,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         Intent intent = new Intent(this, SearchResults.class);
         Intent intent2 = new Intent(this, SearchPage.class);
-        intent.putExtra("searchStr", "");
+        Bundle extras = new Bundle();
+        extras.putString("searchStr", "");
+        extras.putStringArrayList("inclIngr", new ArrayList<String>());
+        extras.putStringArrayList("exclIngr", new ArrayList<String>());
         switch (view.getId())
         {
             case R.id.autors:
@@ -107,42 +110,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.desert:
-                intent.putExtra("category", "Десерты");
+                extras.putString("category", "Десерты");
+                intent.putExtra("search", extras);
                 startActivity(intent);
                 break;
 
             case R.id.brekf:
-                intent.putExtra("category", "Завтраки");
+                extras.putString("category", "Завтраки");
+                intent.putExtra("search", extras);
                 startActivity(intent);
                 break;
 
             case R.id.meat:
-                intent.putExtra("category", "Мясные блюда");
+                extras.putString("category", "Мясные блюда");
+                intent.putExtra("search", extras);
                 startActivity(intent);
                 break;
 
             case R.id.salad:
-                intent.putExtra("category", "Салаты");
+                extras.putString("category", "Салаты");
+                intent.putExtra("search", extras);
                 startActivity(intent);
                 break;
 
             case R.id.soup:
-                intent.putExtra("category", "Супы");
+                extras.putString("category", "Супы");
+                intent.putExtra("search", extras);
                 startActivity(intent);
                 break;
 
             case R.id.drink:
-                intent.putExtra("category", "Напитки");
+                extras.putString("category", "Напитки");
+                intent.putExtra("search", extras);
                 startActivity(intent);
                 break;
 
             case R.id.seaprod:
-                intent.putExtra("category", "Морепродукты");
+                extras.putString("category", "Морепродукты");
+                intent.putExtra("search", extras);
                 startActivity(intent);
                 break;
 
             case R.id.allrecipe:
-                intent.putExtra("category", "");
+                extras.putString("category", "");
+                intent.putExtra("search", extras);
                 startActivity(intent);
                 break;
         }
