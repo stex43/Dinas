@@ -34,7 +34,7 @@ import static android.provider.Telephony.Mms.Part.FILENAME;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    LinearLayout[] linearLayouts = new LinearLayout[10];
+    LinearLayout[] linearLayouts = new LinearLayout[12];
     AlertDialog alert;
     OursApplication oursApp;
 
@@ -69,6 +69,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         linearLayouts[9] = findViewById(R.id.allrecipe);
 
+        linearLayouts[10] = findViewById(R.id.garnish);
+
+        linearLayouts[11] = findViewById(R.id.bake);
+
 
         for (LinearLayout linlayout : linearLayouts) {
             linlayout.setOnClickListener(this);
@@ -85,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else {
             builder
                     .setTitle("Об авторах")
+                    .setMessage(R.string.informaAboutAuthors)
                     .setIcon(R.drawable.ic_tykva)
                     .setPositiveButton("OK", null);
         }
@@ -154,6 +159,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.allrecipe:
                 extras.putString("category", "");
                 intent.putExtra("search", extras);
+                startActivity(intent);
+                break;
+
+            case R.id.garnish:
+                extras.putString("category", "Гарниры");
+                intent.putExtra("search", extras);
+                startActivity(intent);
+                break;
+
+            case R.id.bake:
+                intent.putExtra("category", "Выпечка");
                 startActivity(intent);
                 break;
         }

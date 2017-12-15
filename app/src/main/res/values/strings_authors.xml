@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Kreslina">Креслина Анастасия</string>
+    <string name="aboutKreslina">Пару слов \n о роли в команде</string>
+
+    <string name="Veselova">Веселова Анастасия</string>
+    <string name="aboutVeselova">Пару слов \n о роли в команде</string>
+
+    <string name="Khalin">Халин Дмитрий</string>
+    <string name="aboutKhalin">Пару слов \n о роли в команде</string>
+
+    <string name="Zamaschikova">Замащикова Анастасия</string>
+    <string name="aboutZamaschikova">Пару слов \n о роли в команде</string>
+
+    <string name="informaAboutAuthors">
+        Креслина Анастасия\n
+        Пару слов \n о роли в команде\n\n
+        Веселова Анастасия\n
+        Пару слов \n о роли в команде\n\n
+        Халин Дмитрий\n
+        Пару слов \n о роли в команде\n\n
+        Замащикова Анастасия\n
+        Пару слов \n о роли в команде\n\n
+    </string>
+</resources>

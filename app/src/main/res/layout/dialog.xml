@@ -33,7 +33,7 @@
             android:layout_marginTop="25dp"
             android:layout_toEndOf="@+id/imageView8"
             android:layout_toRightOf="@+id/imageView8"
-            android:text="Креслина Анастасия" />
+            android:text="@string/Kreslina" />
 
         <TextView
             android:id="@+id/textView14"
@@ -42,7 +42,7 @@
             android:layout_alignLeft="@+id/textView13"
             android:layout_alignStart="@+id/textView13"
             android:layout_below="@+id/textView13"
-            android:text="пару слов \n о роли в команде" />
+            android:text="@string/aboutKreslina" />
 
     </RelativeLayout>
 
@@ -69,7 +69,7 @@
             android:layout_toEndOf="@+id/imageView10"
             android:layout_toRightOf="@+id/imageView10"
             android:layout_weight="1"
-            android:text="Веселова Анастасия" />
+            android:text="@string/Veselova" />
 
         <TextView
             android:id="@+id/textView15"
@@ -78,7 +78,7 @@
             android:layout_alignLeft="@+id/textView11"
             android:layout_alignStart="@+id/textView11"
             android:layout_below="@+id/textView11"
-            android:text="пару слов \n о роли в команде" />
+            android:text="@string/aboutVeselova" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -104,7 +104,7 @@
             android:layout_toEndOf="@+id/imageView12"
             android:layout_toRightOf="@+id/imageView12"
             android:layout_weight="1"
-            android:text="Халин Дмитрий" />
+            android:text="@string/Khalin" />
 
         <TextView
             android:id="@+id/textView16"
@@ -113,7 +113,7 @@
             android:layout_alignLeft="@+id/textView8"
             android:layout_alignStart="@+id/textView8"
             android:layout_below="@+id/textView8"
-            android:text="пару слов \n о роли в команде" />
+            android:text="@string/aboutKhalin" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -139,7 +139,7 @@
             android:layout_toEndOf="@+id/imageView13"
             android:layout_toRightOf="@+id/imageView13"
             android:layout_weight="1"
-            android:text="Замащикова Анастасия" />
+            android:text="@string/Zamaschikova" />
 
         <TextView
             android:id="@+id/textView17"
@@ -148,7 +148,7 @@
             android:layout_alignLeft="@+id/textView12"
             android:layout_alignStart="@+id/textView12"
             android:layout_below="@+id/textView12"
-            android:text="пару слов \n о роли в команде" />
+            android:text="@string/aboutZamaschikova" />
     </RelativeLayout>
 
 </LinearLayout>
