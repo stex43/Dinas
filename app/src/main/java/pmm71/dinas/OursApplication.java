@@ -32,7 +32,7 @@ public class OursApplication extends Application {
         recipeNames = new ArrayList<>();
 
         String[] categories = new String[]{ "Салаты", "Десерты", "Завтраки", "Мясные блюда",
-                "Супы", "Напитки", "Морепродукты" };
+                "Супы", "Напитки", "Морепродукты", "Гарниры", "Выпечка" };
         database = new HashMap<>();
         for (String category : categories)
             database.put(category, new HashMap<String, Recipe>());
@@ -178,10 +178,36 @@ public class OursApplication extends Application {
         {
             String nameL = name.toLowerCase();
 
-            if (nameL.contains(seacrhingString.toLowerCase()))
+            if (searchWordInLine(nameL, seacrhingString.toLowerCase()))
                 result.add(name);
         }
 
         return result;
     }
+
+    private Boolean searchWordInLine (String str, String name) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (!Objects.equals(name, "")) {
+
+                str = str.replaceAll("[^a-zA-Zа-яА-Я]", " ");
+                name = name.replaceAll("[^a-zA-Zа-яА-Я]", " ");
+
+                String[] words = str.split("\\s+");
+                String[] wordsname = name.split("\\s+");
+                for (String subName : wordsname) {
+                    Boolean isContained = false;
+                    for (String subStr : words) {
+                        if (Objects.equals(subStr, subName))
+                            isContained = true;
+                    }
+                    if (!isContained)
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
 }
+
+
+
