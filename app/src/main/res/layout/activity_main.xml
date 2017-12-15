@@ -84,11 +84,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="0dp"
             android:layout_marginStart="8dp"
-
             android:layout_marginTop="8dp"
 
+            android:scrollbarSize="12dp"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
+            android:scrollbarFadeDuration="0"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -101,6 +104,75 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:id="@+id/allrecipe"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:background="@drawable/border_startpage_bot"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+
+                            android:gravity="center"
+                            android:text="Все блюда"
+                            android:textAppearance="@android:style/TextAppearance.Theme.Dialog" />
+
+                        <ImageView
+                            android:id="@+id/imageView11"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="4dp"
+                            android:paddingRight="4dp"
+                            android:paddingTop="2dp"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/all2" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/garnish"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:background="@drawable/border_startpage_bot"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView12"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+
+                            android:gravity="center"
+                            android:text="Гарниры"
+                            android:textAppearance="@android:style/TextAppearance.Theme.Dialog" />
+
+                        <ImageView
+                            android:id="@+id/imageView12"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="4dp"
+                            android:paddingRight="4dp"
+                            android:paddingTop="2dp"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/garnish" />
+
+                    </LinearLayout>
+
+                </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -332,7 +404,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/allrecipe"
+                        android:id="@+id/bake"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="50"
@@ -340,17 +412,17 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/textView10"
+                            android:id="@+id/textView13"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
 
                             android:gravity="center"
-                            android:text="Все блюда"
+                            android:text="Выпечка"
                             android:textAppearance="@android:style/TextAppearance.Theme.Dialog" />
 
                         <ImageView
-                            android:id="@+id/imageView11"
+                            android:id="@+id/imageView13"
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
                             android:paddingBottom="2dp"
@@ -358,7 +430,7 @@
                             android:paddingRight="4dp"
                             android:paddingTop="2dp"
                             android:scaleType="fitXY"
-                            app:srcCompat="@drawable/all" />
+                            app:srcCompat="@drawable/bake" />
 
                     </LinearLayout>
 
@@ -367,5 +439,6 @@
             </TableLayout>
 
         </ScrollView>
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
