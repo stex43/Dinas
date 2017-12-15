@@ -46,11 +46,7 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
         ArrayList<String> exclIngr = extras.getStringArrayList("exclIngr");
 
         exclIngr.add("майонез");
-
-        oursApp.resources = this.getResources();
-
-        numRes = oursApp.resources.getInteger(R.integer.numRecipes);
-
+        
         searchRes = oursApp.searchRecipes(category,
                 searchStr, inclIngr, exclIngr);
         for (OursApplication.keysToRecipe keys : searchRes)

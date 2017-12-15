@@ -169,7 +169,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.bake:
-                intent.putExtra("category", "Выпечка");
+                extras.putString("category", "Выпечка");
+                intent.putExtra("search", extras);
                 startActivity(intent);
                 break;
         }

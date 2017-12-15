@@ -3,16 +3,21 @@ package pmm71.dinas;
 import android.app.Application;
 import android.content.res.Resources;
 import android.os.Build;
+import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by St-Ex on 10.12.2017.
@@ -21,14 +26,12 @@ import java.util.Set;
 public class OursApplication extends Application {
     public Map<String, Map<String, Recipe>> database;
     public ArrayList<String> recipeNames;
-    int numRec;
     private float density;
     Resources resources;
 
     public void ReadFiles() {
         resources = this.getResources();
         density = getApplicationContext().getResources().getDisplayMetrics().density;
-        numRec = resources.getInteger(R.integer.numRecipes);
         recipeNames = new ArrayList<>();
 
         String[] categories = new String[]{ "Салаты", "Десерты", "Завтраки", "Мясные блюда",
@@ -40,9 +43,10 @@ public class OursApplication extends Application {
         InputStream in;
         BufferedReader br;
 
-        for (int i = 0; i < numRec; i++) {
-            String rawName = "rec".concat(String.valueOf(i + 1));
-            int recId = resources.getIdentifier(rawName, "raw", this.getPackageName());
+        Field[] fields=R.raw.class.getFields();
+
+        for (int i = 0; i < fields.length; i++) {
+            int recId = resources.getIdentifier(fields[i].getName(), "raw", this.getPackageName());
             in = resources.openRawResource(recId);
             br = new BufferedReader(new InputStreamReader(in));
 
