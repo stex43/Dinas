@@ -1,15 +1,13 @@
 package pmm71.dinas;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -36,6 +34,13 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
 
         searchButton = findViewById(R.id.imageButtonSearch);
         searchButton.setOnClickListener(this);
+
+
+        TextView rt = findViewById(R.id.textView18);
+        String srt = "";
+        for (String elem : oursApp.ingredietns)
+            srt = srt + elem + "\n";
+        rt.setText(srt);
     }
 
 
@@ -47,6 +52,8 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
         extras.putString("searchStr", textView.getText().toString());
         extras.putStringArrayList("inclIngr", new ArrayList<String>());
         extras.putStringArrayList("exclIngr", new ArrayList<String>());
+        extras.putInt("time", 0);
+        extras.putInt("kcal", 0);
         extras.putString("category", "");
         intent.putExtra("search", extras);
                 startActivity(intent);

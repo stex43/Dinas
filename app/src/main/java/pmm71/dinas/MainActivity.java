@@ -1,44 +1,20 @@
 package pmm71.dinas;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.Objects;
-
-import static android.provider.Telephony.Mms.Part.FILENAME;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     LinearLayout[] linearLayouts = new LinearLayout[12];
     AlertDialog alert;
     OursApplication oursApp;
-
-    //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +63,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .setPositiveButton("OK", null);
         }
         else {
+            View view = this.getLayoutInflater().inflate(R.layout.dialog, null);
             builder
                     .setTitle("Об авторах")
-                    .setMessage(R.string.informaAboutAuthors)
                     .setIcon(R.drawable.ic_tykva)
+                    .setView(view)
                     .setPositiveButton("OK", null);
         }
         alert = builder.create();
@@ -104,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         extras.putString("searchStr", "");
         extras.putStringArrayList("inclIngr", new ArrayList<String>());
         extras.putStringArrayList("exclIngr", new ArrayList<String>());
+        extras.putInt("time", 0);
+        extras.putInt("kcal", 0);
         switch (view.getId())
         {
             case R.id.autors:

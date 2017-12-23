@@ -3,15 +3,10 @@ package pmm71.dinas;
 import android.os.Build;
 
 import java.util.ArrayList;
-import java.util.Objects;
-
-/**
- * Created by St-Ex on 10.12.2017.
- */
 
 class Recipe {
-    private String time;
-    private String kcal;
+    private int time;
+    private int kcal;
     private ArrayList<String> ingredients;
     private ArrayList<String> images;
     private ArrayList<String> steps;
@@ -38,23 +33,23 @@ class Recipe {
         steps.add(step);
     }
 
-    void setTime(String settingTime)
+    void setTime(int settingTime)
     {
         time = settingTime;
     }
 
-    void setKcal(String settingKcal)
+    void setKcal(int settingKcal)
     {
         kcal = settingKcal;
     }
     //endregion
 
     //region Getter'ы
-    String getTime() {
+    int getTime() {
         return time;
     }
 
-    String getKcal() {
+    int getKcal() {
         return kcal;
     }
 

@@ -3,28 +3,22 @@ package pmm71.dinas;
 import android.app.Application;
 import android.content.res.Resources;
 import android.os.Build;
-import android.util.Log;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import static java.security.AccessController.getContext;
-
-/**
- * Created by St-Ex on 10.12.2017.
- */
-
 public class OursApplication extends Application {
     public Map<String, Map<String, Recipe>> database;
+    public HashSet<String> ingredietns;
     public ArrayList<String> recipeNames;
     private float density;
     Resources resources;
@@ -33,6 +27,7 @@ public class OursApplication extends Application {
         resources = this.getResources();
         density = getApplicationContext().getResources().getDisplayMetrics().density;
         recipeNames = new ArrayList<>();
+        ingredietns = new HashSet<>();
 
         String[] categories = new String[]{ "Салаты", "Десерты", "Завтраки", "Мясные блюда",
                 "Супы", "Напитки", "Морепродукты", "Гарниры", "Выпечка" };
@@ -43,10 +38,11 @@ public class OursApplication extends Application {
         InputStream in;
         BufferedReader br;
 
-        Field[] fields=R.raw.class.getFields();
+        Field[] fields = R.raw.class.getFields();
 
-        for (int i = 0; i < fields.length; i++) {
-            int recId = resources.getIdentifier(fields[i].getName(), "raw", this.getPackageName());
+        for (Field field : fields) {
+            int recId = resources.getIdentifier(field.getName(), "raw",
+                    this.getPackageName());
             in = resources.openRawResource(recId);
             br = new BufferedReader(new InputStreamReader(in));
 
@@ -71,14 +67,16 @@ public class OursApplication extends Application {
                 categoryName = br.readLine();
 
                 str = br.readLine();
-                recipe.setTime(str);
+                recipe.setTime(Integer.parseInt(str));
 
                 str = br.readLine();
-                recipe.setKcal(str);
+                recipe.setKcal(Integer.parseInt(str));
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    while (!Objects.equals(str = br.readLine(), ""))
+                    while (!Objects.equals(str = br.readLine(), "")) {
                         recipe.AddIngredient(str);
+                        ingredietns.add(str.split(" — ")[0]);
+                    }
                 }
 
                 while ((str = br.readLine()) != null) {
@@ -108,15 +106,15 @@ public class OursApplication extends Application {
         private String category;
         private String recipeName;
 
-        public String getCategory() {
+        String getCategory() {
             return category;
         }
 
-        public String getRecipeName() {
+        String getRecipeName() {
             return recipeName;
         }
 
-        public keysToRecipe(String cat, String name) {
+        keysToRecipe(String cat, String name) {
             category = cat;
             recipeName = name;
         }
@@ -124,7 +122,8 @@ public class OursApplication extends Application {
 
     public ArrayList<keysToRecipe> searchRecipes(String category, String seacrhingString,
                                           ArrayList<String> inclIngrs,
-                                          ArrayList<String> exclIngrs) {
+                                          ArrayList<String> exclIngrs,
+                                                 int kcal, int time) {
         ArrayList<keysToRecipe> result = new ArrayList<>();
 
         //поиск по названию в категории/ях
@@ -148,13 +147,25 @@ public class OursApplication extends Application {
             }
         }
 
-        //поиск по ингредиентам
-        if (inclIngrs.size() != 0 || exclIngrs.size() != 0) {
+        //поиск по ингредиентам, времени и калориям
+        Boolean timeF = time != 0;
+        Boolean kcalF = kcal != 0;
+        if (inclIngrs.size() != 0 || exclIngrs.size() != 0 || timeF || kcalF) {
             outer:
             for (int i = result.size() - 1; i >= 0; i--) {
                 String cat = result.get(i).getCategory();
                 String name = result.get(i).getRecipeName();
                 Recipe recipe = database.get(cat).get(name);
+
+                if (timeF && recipe.getTime() > time) {
+                    result.remove(i);
+                    continue;
+                }
+
+                if (kcalF && recipe.getKcal() > kcal) {
+                    result.remove(i);
+                    continue;
+                }
 
                 for (String ingredient : inclIngrs)
                     if (!recipe.HasIngredient(ingredient)) {
@@ -167,7 +178,6 @@ public class OursApplication extends Application {
                         result.remove(i);
                         continue outer;
                     }
-
             }
         }
         return result;
@@ -212,6 +222,3 @@ public class OursApplication extends Application {
         return true;
     }
 }
-
-
-

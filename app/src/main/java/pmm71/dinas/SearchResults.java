@@ -1,24 +1,17 @@
 package pmm71.dinas;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
@@ -27,9 +20,7 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
     ArrayList<LinearLayout> recipesList = new ArrayList<>();
     ArrayList<OursApplication.keysToRecipe> searchRes;
     OursApplication oursApp;
-    int numRes;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +35,11 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
         String searchStr = extras.getString("searchStr");
         ArrayList<String> inclIngr = extras.getStringArrayList("inclIngr");
         ArrayList<String> exclIngr = extras.getStringArrayList("exclIngr");
-
-        exclIngr.add("майонез");
+        int time = extras.getInt("time");
+        int kcal = extras.getInt("kcal");
         
         searchRes = oursApp.searchRecipes(category,
-                searchStr, inclIngr, exclIngr);
+                searchStr, inclIngr, exclIngr, kcal, 10);
         for (OursApplication.keysToRecipe keys : searchRes)
             addRecipe(keys);
     }
@@ -103,68 +94,7 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
                 text.setTextColor(getResources().getColor(R.color.headerColor));
                 text.setTextSize(COMPLEX_UNIT_SP, 20);
             }
-      
-            /*recipe.addView(text, lParams);
 
-            in.close();
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(this, Recipe.class);
-        intent.putExtra("recipeFile", recipesRawList.get(v.getId()));
-        Toast.makeText(this, recipesRawList.get(v.getId()), Toast.LENGTH_LONG).show();
-        startActivity(intent);
-    }
-
-
-
-    private void searchRecipeName(String nameFile, String nameRecipe) {
-        int recId = resources.getIdentifier(nameFile, "raw", this.getPackageName());
-        InputStream in = resources.openRawResource(recId);
-        BufferedReader br = new BufferedReader(new InputStreamReader(in));
-            String str = "";
-            try {
-                str = br.readLine();
-                in.close();
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            str = str.toLowerCase();
-
-        str = str.toLowerCase();
-        nameRecipe = nameRecipe.toLowerCase();
-        if (str.contains(nameRecipe))
-            addRecipe(nameFile);
-    }
-
-
-
-
-
-
-    private void searchRecipeCategory(String nameFile, String nameCat) {
-        int recId = resources.getIdentifier(nameFile, "raw", this.getPackageName());
-        InputStream in = resources.openRawResource(recId);
-        BufferedReader br = new BufferedReader(new InputStreamReader(in));
-        String str = "";
-        try {
-            for (int i = 0; i < 4; i++)
-                str = br.readLine();
-            in.close();
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        str = str.toLowerCase();
-        nameCat = nameCat.toLowerCase();
-        if (nameCat.equals(str))
-            addRecipe(nameFile);*/
             reclinearLayout.addView(text, lParams);
     }
 }

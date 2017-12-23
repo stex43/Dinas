@@ -2,9 +2,8 @@ package pmm71.dinas;
 
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,7 +22,6 @@ public class RecipeActivity extends AppCompatActivity {
     TextView textView;
     ImageView imageView;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +69,10 @@ public class RecipeActivity extends AppCompatActivity {
 
         // время и ккал
         addHeader("Время");
-        addText(recipe.getTime());
+        addText(String.format("%d мин", recipe.getTime()));
 
         addHeader("ккал");
-        addText(recipe.getKcal());
+        addText(String.format("%d ккал", recipe.getKcal()));
 
         //ингредиенты
         addHeader("Ингредиенты");
@@ -91,8 +89,10 @@ public class RecipeActivity extends AppCompatActivity {
             addText(recipe.getStep(i));
 
             str = recipe.getImage(i + 2);
-            if (!Objects.equals(str, "")) {
-                addImage(str);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (!Objects.equals(str, "")) {
+                    addImage(str);
+                }
             }
         }
     }
