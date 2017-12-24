@@ -15,10 +15,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class OursApplication extends Application {
     public Map<String, Map<String, Recipe>> database;
-    public HashSet<String> ingredietns;
+    public TreeSet<String> ingredietns;
     public ArrayList<String> recipeNames;
     private float density;
     Resources resources;
@@ -27,7 +28,7 @@ public class OursApplication extends Application {
         resources = this.getResources();
         density = getApplicationContext().getResources().getDisplayMetrics().density;
         recipeNames = new ArrayList<>();
-        ingredietns = new HashSet<>();
+        ingredietns = new TreeSet<>();
 
         String[] categories = new String[]{ "Салаты", "Десерты", "Завтраки", "Мясные блюда",
                 "Супы", "Напитки", "Морепродукты", "Гарниры", "Выпечка" };
