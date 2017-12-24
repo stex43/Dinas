@@ -5,4 +5,10 @@
     <integer name="searchResImageMargin">10</integer>
     <integer name="textMargin">10</integer>
     <integer name="headerMargin">5</integer>
+
+
+    <integer name="initialKkal">500</integer>
+    <integer name="maxKkal">800</integer>
+    <integer name="initialTime">60</integer>
+    <integer name="maxTime">200</integer>
 </resources>

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,10 +17,13 @@ import java.util.ArrayList;
  */
 
 public class SearchPage extends AppCompatActivity implements View.OnClickListener {
-    AutoCompleteTextView textView;
+    AutoCompleteTextView searchString;
     ArrayAdapter<String> adapter;
     ImageButton searchButton;
     OursApplication oursApp;
+
+    TextView kolKal, kolTime;
+    SeekBar seekBarKkal, seekBarTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,20 +31,64 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.search_page);
         oursApp = (OursApplication)this.getApplication();
 
-        textView = findViewById(R.id.etName);
+        searchString = findViewById(R.id.etName);
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, oursApp.recipeNames);
-        textView.setAdapter(adapter);
+        searchString.setAdapter(adapter);
 
         searchButton = findViewById(R.id.imageButtonSearch);
         searchButton.setOnClickListener(this);
 
+        seekBarKkal = (SeekBar) findViewById(R.id.seekBarKkal);
+        kolKal = (TextView) findViewById(R.id.KolKkal);
+        kolKal.setText(seekBarKkal.getProgress()+" Ккал");
 
-        TextView rt = findViewById(R.id.textView18);
+        seekBarKkal.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                    kolKal.setText(String.valueOf(progress)+" Ккал");
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+
+        seekBarTime = (SeekBar) findViewById(R.id.seekBarTime);
+        kolTime = (TextView) findViewById(R.id.KolTime);
+        kolTime.setText( seekBarTime.getProgress()+" мин");
+
+        seekBarTime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                kolTime.setText(String.valueOf(progress)+" мин");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
+/*        TextView rt = findViewById(R.id.textView18);
         String srt = "";
         for (String elem : oursApp.ingredietns)
             srt = srt + elem + "\n";
-        rt.setText(srt);
+        rt.setText(srt);*/
     }
 
 
@@ -49,11 +97,11 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         Intent intent = new Intent(this, SearchResults.class);
         Bundle extras = new Bundle();
-        extras.putString("searchStr", textView.getText().toString());
+        extras.putString("searchStr", searchString.getText().toString());
         extras.putStringArrayList("inclIngr", new ArrayList<String>());
         extras.putStringArrayList("exclIngr", new ArrayList<String>());
-        extras.putInt("time", 0);
-        extras.putInt("kcal", 0);
+        extras.putInt("time", seekBarTime.getProgress());
+        extras.putInt("kcal", seekBarKkal.getProgress());
         extras.putString("category", "");
         intent.putExtra("search", extras);
                 startActivity(intent);

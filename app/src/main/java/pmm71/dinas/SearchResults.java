@@ -39,7 +39,7 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
         int kcal = extras.getInt("kcal");
         
         searchRes = oursApp.searchRecipes(category,
-                searchStr, inclIngr, exclIngr, kcal, 10);
+                searchStr, inclIngr, exclIngr, kcal, time);
         for (OursApplication.keysToRecipe keys : searchRes)
             addRecipe(keys);
     }

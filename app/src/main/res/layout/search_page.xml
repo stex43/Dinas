@@ -56,6 +56,48 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textViewKkal"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="Максимальная калорийность" />
+
+            <SeekBar
+                android:id="@+id/seekBarKkal"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:max="@integer/maxKkal"
+                android:progress="@integer/initialKkal"/>
+
+            <TextView
+                android:id="@+id/KolKkal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:gravity="center_horizontal"/>
+
+
+            <TextView
+                android:id="@+id/textViewTime"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="Максимальное время приготовления" />
+
+            <SeekBar
+                android:id="@+id/seekBarTime"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:max="@integer/maxTime"
+                android:progress="@integer/initialTime" />
+
+            <TextView
+                android:id="@+id/KolTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:gravity="center_horizontal"/>
+
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
