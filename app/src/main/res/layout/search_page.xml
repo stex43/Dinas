@@ -57,20 +57,20 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textViewKkal"
+                android:id="@+id/textViewKcal"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:text="Максимальная калорийность" />
 
             <SeekBar
-                android:id="@+id/seekBarKkal"
+                android:id="@+id/seekBarKcal"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
-                android:max="@integer/maxKkal"
-                android:progress="@integer/initialKkal"/>
+                android:max="@integer/maxKсal"
+                android:progress="@integer/initialKcal"/>
 
             <TextView
-                android:id="@+id/KolKkal"
+                android:id="@+id/KolKcal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
@@ -97,16 +97,46 @@
                 android:text="TextView"
                 android:gravity="center_horizontal"/>
 
+            <LinearLayout
+            android:id="@+id/linLayoutIncl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/textView18"
+            <Button
+                android:id="@+id/inclIngr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="Выбрать ингредиенты для включения" />
+
+            <TextView
+                android:id="@+id/IsInclIngr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Список ингредиентов для включения пуст." />
+        </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linLayoutExcl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/exclIngr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Выбрать ингредиенты для исключения" />
+
+                <TextView
+                    android:id="@+id/IsExclIngr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Список ингредиентов для исключения пуст." />
+            </LinearLayout>
+
+
         </LinearLayout>
 
 
