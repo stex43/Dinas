@@ -1,23 +1,30 @@
 package pmm71.dinas;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class SearchPage extends AppCompatActivity implements View.OnClickListener {
@@ -35,58 +42,180 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
     ArrayList <String> inclingrList = new ArrayList<>();
     ArrayList <String> exclingrList = new ArrayList<>();
 
-    ArrayList <TextView> textViewIn = new ArrayList<>();
-    ArrayList <TextView> textViewEx = new ArrayList<>();
+    Spinner spinnerCategories;
 
-    LinearLayout inclIngrLinLayout, exclIngrLinLayout;
-
-    TextView isInclIngr, isExclIngr;
-
+    String[] categories = new String[]{ "Все блюда", "Салаты", "Десерты", "Завтраки", "Мясные блюда",
+            "Супы", "Напитки", "Морепродукты", "Гарниры", "Выпечка" };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_page);
-        oursApp = (OursApplication)this.getApplication();
+        oursApp = (OursApplication) this.getApplication();
 
-        searchString = findViewById(R.id.etName);
+        searchString = (AutoCompleteTextView) findViewById(R.id.etName);
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, oursApp.recipeNames);
         searchString.setAdapter(adapter);
 
-        searchButton = findViewById(R.id.imageButtonSearch);
+        searchButton = (ImageButton) findViewById(R.id.imageButtonSearch);
         searchButton.setOnClickListener(this);
 
         seekBarKcal = (SeekBar) findViewById(R.id.seekBarKcal);
         kolKcal = (TextView) findViewById(R.id.KolKcal);
-        kolKcal.setText(seekBarKcal.getProgress()+" Ккал");
+        kolKcal.setText(seekBarKcal.getProgress() + " Ккал");
 
-        seekBarKcal.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                    kolKcal.setText(String.valueOf(progress)+" Ккал");
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-
-                }
-            });
+        seekBarKcal.setOnSeekBarChangeListener(createSeekbar(" Ккал"));
 
         seekBarTime = (SeekBar) findViewById(R.id.seekBarTime);
         kolTime = (TextView) findViewById(R.id.KolTime);
-        kolTime.setText( seekBarTime.getProgress()+" мин");
+        kolTime.setText(seekBarTime.getProgress() + " мин");
 
-        seekBarTime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBarTime.setOnSeekBarChangeListener(createSeekbar(" мин"));
+
+
+        ArrayList<TextView> textViewIn = new ArrayList<>();
+        ArrayList<TextView> textViewEx = new ArrayList<>();
+
+        LinearLayout inclIngrLinLayout, exclIngrLinLayout;
+
+        TextView isInclIngr, isExclIngr;
+
+        isInclIngr = (TextView) findViewById(R.id.IsInclIngr);
+        isExclIngr = (TextView) findViewById(R.id.IsExclIngr);
+
+        inclIngr = (Button) findViewById(R.id.inclIngr);
+        inclIngr.setOnClickListener(this);
+
+        exclIngr = (Button) findViewById(R.id.exclIngr);
+        exclIngr.setOnClickListener(this);
+
+        inclIngrLinLayout = (LinearLayout) findViewById(R.id.linLayoutIncl);
+        exclIngrLinLayout = (LinearLayout) findViewById(R.id.linLayoutExcl);
+
+        final String[] ingr = oursApp.ingredietns.toArray(new String[oursApp.ingredietns.size()]);
+        final boolean[] mCheckedItemsIn = new boolean[ingr.length];
+        for (boolean elem : mCheckedItemsIn)
+            elem = false;
+
+        final boolean[] mCheckedItemsEx = new boolean[ingr.length];
+        for (boolean elem : mCheckedItemsEx)
+            elem = false;
+
+        alertIn = createDialog(ingr, mCheckedItemsIn, "для включения", inclingrList, textViewIn, isInclIngr, inclIngrLinLayout);
+        alertEx = createDialog(ingr, mCheckedItemsEx, "для исключения", exclingrList, textViewEx, isExclIngr, exclIngrLinLayout);
+
+
+        spinnerCategories = (Spinner) findViewById(R.id.spinnerCategories);
+
+        MyCustomAdapter adapter = new MyCustomAdapter(this, R.layout.row, categories);
+
+
+        spinnerCategories.setAdapter(adapter);
+        spinnerCategories.setSelection(0, false);
+
+        spinnerCategories.setOnItemSelectedListener(createSpinnerAdapter());
+    }
+
+
+
+    public class MyCustomAdapter extends ArrayAdapter<String> {
+
+        public MyCustomAdapter(Context context, int textViewResourceId,
+                               String[] objects) {
+            super(context, textViewResourceId, objects);
+
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView,
+                                    ViewGroup parent) {
+
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            return getCustomView(position, convertView, parent);
+        }
+
+        public View getCustomView(int position, View convertView,
+                                  ViewGroup parent) {
+
+            LayoutInflater inflater = getLayoutInflater();
+            View row = inflater.inflate(R.layout.row, parent, false);
+            TextView label = (TextView) row.findViewById(R.id.selectedCategory);
+            label.setText(categories[position]);
+
+            ImageView icon = (ImageView) row.findViewById(R.id.icon);
+
+            switch (categories[position])
+            {
+                case "Все блюда":
+                    icon.setImageResource(R.drawable.all2);
+                    break;
+                case "Салаты":
+                    icon.setImageResource(R.drawable.salad);
+                    break;
+                case "Десерты":
+                    icon.setImageResource(R.drawable.desert);
+                    break;
+                case "Завтраки":
+                    icon.setImageResource(R.drawable.breakfasts);
+                    break;
+                case "Мясные блюда":
+                    icon.setImageResource(R.drawable.meat);
+                    break;
+                case "Супы":
+                    icon.setImageResource(R.drawable.soups);
+                    break;
+                case "Напитки":
+                    icon.setImageResource(R.drawable.drinking);
+                    break;
+                case "Морепродукты":
+                    icon.setImageResource(R.drawable.sea);
+                    break;
+                case "Гарниры":
+                    icon.setImageResource(R.drawable.garnish);
+                    break;
+                case "Выпечка":
+                    icon.setImageResource(R.drawable.bake);
+                    break;
+
+            }
+            return row;
+        }
+    }
+
+
+    private AdapterView.OnItemSelectedListener createSpinnerAdapter()
+    {
+        AdapterView.OnItemSelectedListener spinerAdapter= new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Выбранная категория: " + categories[pos], Toast.LENGTH_SHORT);
+                toast.show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        };
+        return spinerAdapter;
+    }
+
+
+    private SeekBar.OnSeekBarChangeListener createSeekbar(final String type)
+    {
+        SeekBar.OnSeekBarChangeListener seekBar = new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                kolTime.setText(String.valueOf(progress)+" мин");
+                kolKcal.setText(String.valueOf(progress)+type);
             }
 
             @Override
@@ -98,40 +227,12 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
             public void onStopTrackingTouch(SeekBar seekBar) {
 
             }
-        });
-
-
-        isInclIngr = findViewById(R.id.IsInclIngr);
-        isInclIngr.setOnClickListener(this);
-        isExclIngr = findViewById(R.id.IsExclIngr);
-
-        inclIngr = findViewById(R.id.inclIngr);
-        inclIngr.setOnClickListener(this);
-
-        final String[] ingr = oursApp.ingredietns.toArray(new String[oursApp.ingredietns.size()]);
-        final boolean[] mCheckedItemsIn = new boolean[ingr.length];
-        for (boolean elem : mCheckedItemsIn)
-            elem = false;
-
-        final boolean[] mCheckedItemsEx = new boolean[ingr.length];
-        for (boolean elem : mCheckedItemsEx)
-            elem = false;
-
-        inclIngrLinLayout = findViewById(R.id.linLayoutIncl);
-        alertIn = createDialog(ingr, mCheckedItemsIn, "для включения", inclingrList, textViewIn, isInclIngr, inclIngrLinLayout);
-
-        exclIngr = findViewById(R.id.exclIngr);
-        exclIngr.setOnClickListener(this);
-
-        exclIngrLinLayout = findViewById(R.id.linLayoutExcl);
-        alertEx = createDialog(ingr, mCheckedItemsEx, "для исключения", exclingrList, textViewEx, isExclIngr, exclIngrLinLayout);
-
-
-
-
+        };
+        return seekBar;
     }
 
-    public AlertDialog createDialog (final String[] ingr, final boolean[] mCheckedItems, final String type,
+
+    private AlertDialog createDialog(final String[] ingr, final boolean[] mCheckedItems, final String type,
                                      final ArrayList <String> ingrList, final ArrayList <TextView> textView,
                                      final TextView isEmptyList, final LinearLayout IngrLinLayout)
     {
@@ -195,7 +296,7 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
 
 
 
-    public void createTextView(ArrayList <TextView> textView, ArrayList <String> ingrList,
+    private void createTextView(ArrayList <TextView> textView, ArrayList <String> ingrList,
                                LinearLayout IngrLinLayout, TextView isEmptyList, String type)
     {
         for (TextView item : textView)
@@ -238,7 +339,11 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
                 extras.putStringArrayList("exclIngr", exclingrList);
                 extras.putInt("time", seekBarTime.getProgress());
                 extras.putInt("kcal", seekBarKcal.getProgress());
-                extras.putString("category", "");
+                int pos = spinnerCategories.getSelectedItemPosition();
+                if (pos==0)
+                    extras.putString("category", "");
+                else
+                    extras.putString("category", categories[pos]);
                 intent.putExtra("search", extras);
                 startActivity(intent);
                 break;
