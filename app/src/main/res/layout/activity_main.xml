@@ -16,7 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/large"
+        android:background="@drawable/backgr"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,6 +52,7 @@
                     android:id="@+id/searchtext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/font1"
                     android:gravity="center"
                     android:text="Поиск" />
             </LinearLayout>
@@ -73,6 +74,7 @@
                     android:id="@+id/autorstext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/font1"
                     android:gravity="center"
                     android:text="Об авторах" />
             </LinearLayout>
@@ -122,6 +124,7 @@
                             android:id="@+id/textView10"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/font1"
 
 
                             android:gravity="center"
@@ -153,6 +156,7 @@
                             android:id="@+id/textView12"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/font1"
 
 
                             android:gravity="center"
@@ -192,6 +196,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:fontFamily="@font/font1"
                             android:text="Десерты"
                             android:textAppearance="@android:style/TextAppearance.Theme.Dialog" />
 
@@ -225,6 +230,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:fontFamily="@font/font1"
                             android:text="Завтраки"
                             android:textAppearance="@android:style/TextAppearance.Theme.Dialog" />
 
@@ -261,6 +267,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:fontFamily="@font/font1"
                             android:text="Мясные блюда"
                             android:textAppearance="@android:style/TextAppearance.Theme.Dialog" />
 
@@ -289,6 +296,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:fontFamily="@font/font1"
                             android:text="Салаты"
                             android:textAppearance="@android:style/TextAppearance.Theme.Dialog" />
 
@@ -323,6 +331,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:fontFamily="@font/font1"
                             android:text="Супы"
                             android:textAppearance="@android:style/TextAppearance.Theme.Dialog" />
 
@@ -351,6 +360,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:fontFamily="@font/font1"
                             android:text="Напитки"
                             android:textAppearance="@android:style/TextAppearance.Theme.Dialog" />
 
@@ -387,6 +397,7 @@
 
 
                             android:gravity="center"
+                            android:fontFamily="@font/font1"
                             android:text="Морепродукты"
                             android:textAppearance="@android:style/TextAppearance.Theme.Dialog" />
 
@@ -418,6 +429,7 @@
 
 
                             android:gravity="center"
+
                             android:text="Выпечка"
                             android:textAppearance="@android:style/TextAppearance.Theme.Dialog" />
 

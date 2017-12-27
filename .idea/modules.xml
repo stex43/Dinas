@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Dinas.iml" filepath="$PROJECT_DIR$/Dinas.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Дмитрий\Documents\GitHub\Dinas\app\app.iml" filepath="C:\Users\Дмитрий\Documents\GitHub\Dinas\app\app.iml" />
     </modules>
   </component>
 </project>
