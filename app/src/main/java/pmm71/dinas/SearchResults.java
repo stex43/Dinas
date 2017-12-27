@@ -1,10 +1,12 @@
 package pmm71.dinas;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -40,6 +42,9 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
         
         searchRes = oursApp.searchRecipes(category,
                 searchStr, inclIngr, exclIngr, kcal, time);
+
+        isResultOfSearch();
+
         for (OursApplication.keysToRecipe keys : searchRes)
             addRecipe(keys);
     }
@@ -96,5 +101,38 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
             }
 
             reclinearLayout.addView(text, lParams);
+    }
+
+    private void isResultOfSearch()
+    {
+        TextView isRes = findViewById(R.id.isResTextView);
+        LinearLayout isResLinLayout = findViewById(R.id.isResLinLayout);
+
+
+        if(searchRes.isEmpty()){
+            isRes.setText("По запросу ничего не найдено.");
+            isRes.setGravity(Gravity.CENTER_HORIZONTAL);
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int height = size.y;
+            isResLinLayout.setPadding(0,height/4, 0, 0);
+            ImageView noRes = new ImageView(this);
+            noRes.setImageResource(R.drawable.noresult);
+            noRes.setScaleType(ImageView.ScaleType.CENTER);
+            isResLinLayout.addView(noRes);
+        }
+
+        else
+            isRes.setText("Найденные результаты:");
+        isRes.setHeight(oursApp.pxFromDp(oursApp.pxFromDp(20)));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            isRes.setTextAppearance(R.style.isRes);
+        }
+        else {
+            isRes.setTextColor(getResources().getColor(R.color.isResColor));
+            isRes.setTextSize(COMPLEX_UNIT_SP, 18);
+        }
     }
 }

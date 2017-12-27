@@ -13,9 +13,17 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="isRes">
+        <item name="android:textColor">@color/isResColor</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+
     <style name="text">
         <item name="android:textColor">@color/textColor</item>
         <item name="android:textSize">16sp</item>
     </style>
+
+
 
 </resources>

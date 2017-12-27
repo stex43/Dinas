@@ -7,4 +7,5 @@
     <color name="borderColor">#ff008f</color>
     <color name="mainpageborderColor">#9d009d</color>
     <color name="textColor">#4d4d4d</color>
+    <color name="isResColor">#804930</color>
 </resources>
