@@ -62,16 +62,18 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
 
         seekBarKcal = (SeekBar) findViewById(R.id.seekBarKcal);
         kolKcal = (TextView) findViewById(R.id.KolKcal);
+
         kolKcal.setText(seekBarKcal.getProgress() + " Ккал");
+        SeekBar.OnSeekBarChangeListener seekBar = null;
+        seekBarKcal.setOnSeekBarChangeListener(createSeekbar(" Ккал", kolKcal));
 
-
-        seekBarKcal.setOnSeekBarChangeListener(createSeekbar(" Ккал"));
 
         seekBarTime = (SeekBar) findViewById(R.id.seekBarTime);
         kolTime = (TextView) findViewById(R.id.KolTime);
-        kolTime.setText(seekBarTime.getProgress() + " мин");
 
-        seekBarTime.setOnSeekBarChangeListener(createSeekbar(" мин"));
+        kolTime.setText(seekBarTime.getProgress() + " мин");
+        SeekBar.OnSeekBarChangeListener seekBar2 = null;
+        seekBarTime.setOnSeekBarChangeListener(createSeekbar(" мин", kolTime));
 
 
         ArrayList<TextView> textViewIn = new ArrayList<>();
@@ -209,13 +211,14 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
     }
 
 
-    private SeekBar.OnSeekBarChangeListener createSeekbar(final String type)
+
+    private SeekBar.OnSeekBarChangeListener createSeekbar(final String type, final TextView textViewKol)
     {
-        SeekBar.OnSeekBarChangeListener seekBar = new SeekBar.OnSeekBarChangeListener() {
+         return new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                kolKcal.setText(String.valueOf(progress)+type);
+                textViewKol.setText(String.valueOf(progress)+type);
             }
 
             @Override
@@ -228,7 +231,6 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
 
             }
         };
-        return seekBar;
     }
 
 
