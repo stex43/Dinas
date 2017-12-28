@@ -13,6 +13,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/backgr"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,8 +40,10 @@
                     android:layout_alignTop="@+id/imageButtonSearch"
                     android:layout_marginTop="15dp"
                     android:layout_weight="5"
+                    android:fontFamily="@font/font1"
+                    android:textSize="19sp"
                     android:fadeScrollbars="true"
-                    android:hint="Ведите название рецепта"
+                    android:hint="Введите название рецепта"
                     android:singleLine="true" />
 
                 <ImageButton
@@ -58,63 +61,75 @@
 
             <TextView
                 android:id="@+id/textViewKcal"
+                android:fontFamily="@font/font1"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
+                android:textStyle="bold"
+                android:textColor="@color/isResColor"
+                android:textSize="15sp"
                 android:text="Максимальная калорийность" />
 
             <SeekBar
                 android:id="@+id/seekBarKcal"
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="40dp"
                 android:max="@integer/maxKсal"
-                android:progress="@integer/initialKcal"/>
+                android:progress="@integer/initialKcal" />
 
             <TextView
                 android:id="@+id/KolKcal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:gravity="center_horizontal"/>
+                android:layout_height="30dp"
+                android:fontFamily="@font/font1"
+                android:gravity="center_horizontal"
+                android:text="TextView" />
 
 
             <TextView
                 android:id="@+id/textViewTime"
+                android:fontFamily="@font/font1"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
+                android:textStyle="bold"
+                android:textColor="@color/isResColor"
+                android:textSize="15sp"
                 android:text="Максимальное время приготовления" />
 
             <SeekBar
                 android:id="@+id/seekBarTime"
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="40dp"
                 android:max="@integer/maxTime"
                 android:progress="@integer/initialTime" />
 
             <TextView
                 android:id="@+id/KolTime"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:gravity="center_horizontal"/>
+                android:layout_height="30dp"
+                android:fontFamily="@font/font1"
+                android:gravity="center_horizontal"
+                android:text="TextView" />
 
             <LinearLayout
-            android:id="@+id/linLayoutIncl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/inclIngr"
+                android:id="@+id/linLayoutIncl"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Выбрать ингредиенты для включения" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/IsInclIngr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Список ингредиентов для включения пуст." />
-        </LinearLayout>
+                <Button
+                    android:id="@+id/inclIngr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font1"
+                    android:text="Выбрать ингредиенты для включения" />
+
+                <TextView
+                    android:id="@+id/IsInclIngr"
+                    android:fontFamily="@font/font1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Список ингредиентов для включения пуст." />
+            </LinearLayout>
 
 
             <LinearLayout
@@ -127,10 +142,12 @@
                     android:id="@+id/exclIngr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/font1"
                     android:text="Выбрать ингредиенты для исключения" />
 
                 <TextView
                     android:id="@+id/IsExclIngr"
+                    android:fontFamily="@font/font1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Список ингредиентов для исключения пуст." />
@@ -145,12 +162,18 @@
 
                 <TextView
                     android:id="@+id/textViewSpinner"
+                    android:fontFamily="@font/font1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/isResColor"
                     android:text="Выбраная категория:"
                     android:gravity="center_horizontal"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
+
+
                     />
 
                 <Spinner

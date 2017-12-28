@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#CD0074</color>
-    <color name="colorPrimaryDark">#990057</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="headerColor">#CD0074</color>
-    <color name="borderColor">#ff008f</color>
-    <color name="mainpageborderColor">#9d009d</color>
+    <color name="colorPrimary">#bf4e51</color>
+    <color name="colorPrimaryDark">#ff9a9b</color>
+    <color name="colorAccent">#ff6d70</color>
+    <color name="headerColor">#ff6d70</color>
+    <color name="borderColor">#ffc4c5</color>
+    <color name="mainpageborderColor">#ff9a9b</color>
     <color name="textColor">#4d4d4d</color>
     <color name="isResColor">#804930</color>
 </resources>
+

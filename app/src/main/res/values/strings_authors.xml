@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="Kreslina">Креслина Анастасия</string>
-    <string name="aboutKreslina">Пару слов \n о роли в команде</string>
+    <string name="aboutKreslina">Лидер команды, \n back-end-разработка</string>
 
     <string name="Veselova">Веселова Анастасия</string>
-    <string name="aboutVeselova">Пару слов \n о роли в команде</string>
+    <string name="aboutVeselova">front-end-разработка, \n дизайн</string>
 
     <string name="Khalin">Халин Дмитрий</string>
-    <string name="aboutKhalin">Пару слов \n о роли в команде</string>
+    <string name="aboutKhalin">Дизайн, \n расширение базы данных</string>
 
     <string name="Zamaschikova">Замащикова Анастасия</string>
-    <string name="aboutZamaschikova">Пару слов \n о роли в команде</string>
+    <string name="aboutZamaschikova">Автор идеи, \n расширение базы данных</string>
 
     <string name="informaAboutAuthors">
         Креслина Анастасия\n

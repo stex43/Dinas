@@ -62,18 +62,16 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
 
         seekBarKcal = (SeekBar) findViewById(R.id.seekBarKcal);
         kolKcal = (TextView) findViewById(R.id.KolKcal);
-
         kolKcal.setText(seekBarKcal.getProgress() + " Ккал");
-        SeekBar.OnSeekBarChangeListener seekBar = null;
-        seekBarKcal.setOnSeekBarChangeListener(createSeekbar(" Ккал", kolKcal));
 
+
+        seekBarKcal.setOnSeekBarChangeListener(createSeekbar(" Ккал"));
 
         seekBarTime = (SeekBar) findViewById(R.id.seekBarTime);
         kolTime = (TextView) findViewById(R.id.KolTime);
-
         kolTime.setText(seekBarTime.getProgress() + " мин");
-        SeekBar.OnSeekBarChangeListener seekBar2 = null;
-        seekBarTime.setOnSeekBarChangeListener(createSeekbar(" мин", kolTime));
+
+        seekBarTime.setOnSeekBarChangeListener(createSeekbar(" мин"));
 
 
         ArrayList<TextView> textViewIn = new ArrayList<>();
@@ -211,14 +209,13 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
     }
 
 
-
-    private SeekBar.OnSeekBarChangeListener createSeekbar(final String type, final TextView textViewKol)
+    private SeekBar.OnSeekBarChangeListener createSeekbar(final String type)
     {
-         return new SeekBar.OnSeekBarChangeListener() {
+        SeekBar.OnSeekBarChangeListener seekBar = new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                textViewKol.setText(String.valueOf(progress)+type);
+                kolKcal.setText(String.valueOf(progress)+type);
             }
 
             @Override
@@ -231,6 +228,7 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
 
             }
         };
+        return seekBar;
     }
 
 
@@ -299,7 +297,7 @@ public class SearchPage extends AppCompatActivity implements View.OnClickListene
 
 
     private void createTextView(ArrayList <TextView> textView, ArrayList <String> ingrList,
-                               LinearLayout IngrLinLayout, TextView isEmptyList, String type)
+                                LinearLayout IngrLinLayout, TextView isEmptyList, String type)
     {
         for (TextView item : textView)
             item.setVisibility(View.GONE);
